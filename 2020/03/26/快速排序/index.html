@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>快速排序 | chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="快速排序QuickSort未优化的快速排序实现123456789101112131415161718192021222324252627282930313233template &lt;typename T&gt;int partition(T arr[], int lo, int hi)&amp;#123;    T pivot_e &#x3D; arr[lo];    int j &#x3D; lo;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速排序">
+<meta property="og:url" content="https://cng3s.github.io/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="快速排序QuickSort未优化的快速排序实现123456789101112131415161718192021222324252627282930313233template &lt;typename T&gt;int partition(T arr[], int lo, int hi)&amp;#123;    T pivot_e &#x3D; arr[lo];    int j &#x3D; lo;">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-26T11:47:50.000Z">
+<meta property="article:modified_time" content="2020-03-26T11:48:19.069Z">
+<meta property="article:author" content="chneg">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-快速排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2020-03-26T11:47:50.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      快速排序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="快速排序QuickSort"><a href="#快速排序QuickSort" class="headerlink" title="快速排序QuickSort"></a>快速排序QuickSort</h1><h2 id="未优化的快速排序实现"><a href="#未优化的快速排序实现" class="headerlink" title="未优化的快速排序实现"></a>未优化的快速排序实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line"></span><br><span class="line">    int j &#x3D; lo;</span><br><span class="line">    for (int i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">        if (arr[i] &lt; pivot_e)</span><br><span class="line">            swap(arr[++j], arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr[lo], arr[j]);</span><br><span class="line">    return j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition(arr, lo, hi);</span><br><span class="line">    QuickSort(arr, lo, pivot-1);</span><br><span class="line">    QuickSort(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    QuickSort(arr, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 400.672 s</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="复杂度："><a href="#复杂度：" class="headerlink" title="复杂度："></a>复杂度：</h2><ol>
+<li>时间复杂度：O(nlogn)</li>
+<li>空间复杂度：O(1)</li>
+</ol>
+<hr>
+<h2 id="未优化的快速排序算法有什么问题？"><a href="#未优化的快速排序算法有什么问题？" class="headerlink" title="未优化的快速排序算法有什么问题？"></a>未优化的快速排序算法有什么问题？</h2><h3 id="1-数组元素较少的情况"><a href="#1-数组元素较少的情况" class="headerlink" title="1. 数组元素较少的情况"></a>1. 数组元素较少的情况</h3><h4 id="解决方案：同归并排序的解决方案，直接转插排"><a href="#解决方案：同归并排序的解决方案，直接转插排" class="headerlink" title="解决方案：同归并排序的解决方案，直接转插排"></a>解决方案：同归并排序的解决方案，直接转插排</h4><h3 id="2-近乎有序的数组-——-pivot的选择"><a href="#2-近乎有序的数组-——-pivot的选择" class="headerlink" title="2. 近乎有序的数组 —— pivot的选择"></a>2. 近乎有序的数组 —— pivot的选择</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>partition中pivot默认是lo，pivot_e默认是arr[lo]，对于近乎有序的数组会发生退化到O(n^2)。<br>性能测试中对于n=10000,优化后的MergeSort=0.2s，而QuickSort=51s。<br>其原因在于<strong>归并排序每次分割出来的数组左右都是平均一样大小的</strong>，而<strong>快速排序是不平均的</strong>。<br>在近乎有序的数组中快速排序总是分为两个长度分别为<strong>1</strong>和<strong>n-1</strong>的数组，又递归地对n-1数组进行排序，而n-1的数组又分为<strong>1</strong>和<strong>n-2</strong>的两个数组…  </p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>使用随机的pivot，经过数学证明随机的pivot在概率期望的时间复杂度为O(nlogn)。原因是：长度为n的数组，只有1/n的概率pivot=lo，接着又在n-1的数组中只有1/(n-1)的概率pivot=lo，… 也就是说，命中O(n^2)的概率p = n(n-1)(n-2)….1，如果是元素较多的数组中概率p接近于0。而对于普通的随机数组，只是略微变慢但效率保持在一个数量级。</p>
+<h4 id="改进方案的代码"><a href="#改进方案的代码" class="headerlink" title="改进方案的代码"></a>改进方案的代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition2(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; 优化2：随机选择pivot</span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line"></span><br><span class="line">    int j &#x3D; lo;</span><br><span class="line">    for (int i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">        if (arr[i] &lt; pivot_e)</span><br><span class="line">            std::swap(arr[++j], arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr[lo], arr[j]);</span><br><span class="line">    return j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;	&#x2F;&#x2F; 优化1：元素较少时转插排</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition2(arr, lo, hi);</span><br><span class="line">    QuickSort2(arr, lo, pivot-1);</span><br><span class="line">    QuickSort2(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    srand(time(NULL));</span><br><span class="line">    QuickSort2(arr, 0, n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-大量重复元素的数组-——-二路快速排序法"><a href="#3-大量重复元素的数组-——-二路快速排序法" class="headerlink" title="3. 大量重复元素的数组 —— 二路快速排序法"></a>3. 大量重复元素的数组 —— 二路快速排序法</h3><h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4><p>关注这一段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (int i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">    if (arr[i] &lt; pivot_e)</span><br><span class="line">        std::swap(arr[++j], arr[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这一段代码是遍历arr全部元素，如果比pivot_e小，则放在未来的pivot的左边，比pivot_e<strong>大或等于</strong>pivot，则放在未来的pivot的右边。<br>而问题就在于<strong>等于</strong>又一次导致了<strong>pivot划分两个数组元素不平均</strong>的问题。<br>考虑两种情况：  </p>
+<ol>
+<li>大量值为v的重复元素比pivot_e小/大 ==&gt; 大量值为v的元素落在pivot分割数组的左边/右边</li>
+<li>大量值为v的重复元素和pivot_e相等 ==&gt; 大量值为v的元素落在pivot分割数组的右边<br>所以不论怎么样，因为大量的重复元素一定会导致数组变得失衡（除非有成对的且基本一样多的值为v1,v2的元素正好落在pivot的两侧）。  <h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4>二路排序法通过<strong>雨露均沾</strong>的想法，左侧可以有一定机会获得和pivot_e相等的元素，右侧也可以有一定机会获得和pivot_e相等的元素，这样就可以保证每次通过pivot分割出来的两个数组元素数量尽可能接近，不会有非常失衡的情况出现。最后pivot就区分出了两个分区，arr[lo, pivot-1] &lt;= pivot_e 和 arr[pivot+1, hi] &gt;= pivot_e。<br>接下来给出这个代码的两种版本，一种是严蔚敏老师的，一种是bobo老师的，严版的代码更简洁漂亮，整体效率更好，而bobo老师的简单易懂。  <h4 id="改进方案的代码-1"><a href="#改进方案的代码-1" class="headerlink" title="改进方案的代码"></a>改进方案的代码</h4>严：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    while (lo &lt; hi) &#123;</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[hi] &gt;&#x3D; pivot_e) --hi;</span><br><span class="line">        arr[lo] &#x3D; arr[hi];</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[lo] &lt;&#x3D; pivot_e) ++lo;</span><br><span class="line">        arr[hi] &#x3D; arr[lo];</span><br><span class="line">    &#125;</span><br><span class="line">    arr[lo] &#x3D; pivot_e;</span><br><span class="line">    return lo;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">    int pivot &#x3D; partition2Ways(arr, lo, hi);</span><br><span class="line">    </span><br><span class="line">    QuickSort2Ways(arr, lo, pivot-1);</span><br><span class="line">    QuickSort2Ways(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 257.516 s</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">Quick Sort: 125.25 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0,10]</span><br><span class="line">^C (包含大量重复元素的测试数据，跑了差不多2小时但没有结果)</span><br><span class="line"></span><br><span class="line">未加随机pivot优化的严版快速二路排序算法：</span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 225.75 s</span><br></pre></td></tr></table></figure>
+bobo:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    std::swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line"></span><br><span class="line">    int i &#x3D; lo+1, j &#x3D; hi;</span><br><span class="line">    while (true) &#123;</span><br><span class="line">        while (i &lt;&#x3D; hi &amp;&amp; arr[i] &lt; pivot_e) ++i;</span><br><span class="line">        while (j &gt;&#x3D; lo+1 &amp;&amp; arr[j] &gt; pivot_e) --j;</span><br><span class="line">        if (i &gt; j) break;</span><br><span class="line">        std::swap(arr[i++], arr[j--]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">    int pivot &#x3D; partition2(arr, lo, hi);</span><br><span class="line">    QuickSort2Ways(arr, lo, pivot-1);</span><br><span class="line">    QuickSort2Ways(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2Ways(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    srand(time(nullptr));</span><br><span class="line">    QuickSort2Ways(arr, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 419.562 s</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">Quick Sort: 305.734 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 999999, random range [0,10]</span><br><span class="line">Quick Sort: 105.688 s （包含大量重复元素的测试数据，只有100万个测试元素）</span><br></pre></td></tr></table></figure>
+<h3 id="3-更好的大量重复元素的解决方案-——-三路快速排序法"><a href="#3-更好的大量重复元素的解决方案-——-三路快速排序法" class="headerlink" title="3. 更好的大量重复元素的解决方案 —— 三路快速排序法"></a>3. 更好的大量重复元素的解决方案 —— 三路快速排序法</h3><h4 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h4>从二路快速排序算法的测试结果中可以看出，在面对大量重复元素的10亿个左右的测试数据下，使用了2个小时仍然无法有正确的排序返回结果。而在100万个包含大量重复元素的测试数据情况下，也需要和10亿个完全随机元素差不多的时间才能有正确结果。<br>当面对大量重复元素的时候，二路快速排序法虽然好，但是需要多次对pivot分割出来的含有重复且相等的元素的两个数组arr[lo, pivot-1] &lt;= pivot_e 和 arr[pivot+1, hi] &gt;= pivot_e进行递归快排,有没有什么办法一下子可以把所有重复的元素剔除出来以减少两个数组的大小和递归的次数呢？<h4 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h4>当面对大量重复元素的时候，二路快速排序法选择分为两个区间，arr[lo, pivot-1] &lt;= pivot_e 和 arr[pivot+1, hi] &gt;= pivot_e。<br>而三路快速排序法选择分为三个区间：arr[lo, pivot_left-1] &lt; pivot_e , arr[pivot_left, pivot_right] == pivot_e , arr[pivot_right+1, hi] &gt; pivot_e。<br>通过这种方法就剔除出所有等于pivot_e的元素，减少了递归的次数。<br>注：对于以下提供的程序代码来说，三个区间分别是arr[lo, lt-1] &lt; pivot_e , arr[lt, gt-1] == pivot_e , arr[gt, hi] &gt; pivot_e。如果有疑惑可以看bobo老师视频演示动画。  <h4 id="改进方案的代码-2"><a href="#改进方案的代码-2" class="headerlink" title="改进方案的代码"></a>改进方案的代码</h4>自己写的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways2(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">        insertionSort(arr, lo, hi);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    int lt &#x3D; lo, i &#x3D; lo+1, gt &#x3D; hi+1;</span><br><span class="line">    while (i &lt; gt) &#123;</span><br><span class="line">        while (i &lt; gt &amp;&amp; arr[i] &lt; pivot_e) swap(arr[i++], arr[++lt]);</span><br><span class="line">        while (i &lt; gt &amp;&amp; arr[i] &gt; pivot_e) swap(arr[i], arr[--gt]);</span><br><span class="line">        while (i &lt; gt &amp;&amp; arr[i] &#x3D;&#x3D; pivot_e) ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr[lo], arr[lt]);</span><br><span class="line">    QuickSort3Ways2(arr, lo, lt-1);</span><br><span class="line">    QuickSort3Ways2(arr, gt, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways2(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    srand(time(nullptr));</span><br><span class="line">    QuickSort3Ways2(arr, 0, n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+bobo版：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways1(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">        insertionSort(arr, lo, hi);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    int lt &#x3D; lo; &#x2F;&#x2F; 排序过程中lt 指向最后一个 &lt; pivot_e的元素</span><br><span class="line">    int gt &#x3D; hi+1; &#x2F;&#x2F; gt 指向第一个 &gt; pivot_e的元素</span><br><span class="line">    int i &#x3D; lo+1; &#x2F;&#x2F; i 指向将要与 pivot_e比较的元素</span><br><span class="line">    while (i &lt; gt) &#123;</span><br><span class="line">        if (arr[i] &lt; pivot_e)</span><br><span class="line">            swap(arr[i++], arr[++lt]);</span><br><span class="line">        else if (arr[i] &gt; pivot_e)</span><br><span class="line">            swap(arr[i], arr[--gt]);</span><br><span class="line">        else</span><br><span class="line">            ++i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    swap(arr[lo], arr[lt]); &#x2F;&#x2F; 排好序lt 指向第一个 &#x3D;&#x3D; pivot_e的元素</span><br><span class="line">    QuickSort3Ways1(arr, lo, lt-1);</span><br><span class="line">    QuickSort3Ways1(arr, gt, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways1(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">	srand(time(nullptr));</span><br><span class="line">    QuickSort3Ways1(arr, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 527.094 s (完全随机元素速度在10亿量级减慢了100s左右，完全可以接受)</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">Quick Sort: 442.156 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0,10]</span><br><span class="line">Quick Sort: 46.9531 s (太强了，对于大量重复元素的情况提升巨大)</span><br></pre></td></tr></table></figure>
+这里附上两个版本的测试对比：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">QuickSort3Ways1 : 143.312 s</span><br><span class="line">QuickSort3Ways2: 138.672 s</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">QuickSort3Ways1: : 51.5312 s</span><br><span class="line">QuickSort3Ways2: 45.8594 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0,10]</span><br><span class="line">QuickSort3Ways1: : 16.2188 s</span><br><span class="line">QuickSort3Ways2: 15.3281 s</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h2 id="小记：我的错误优化"><a href="#小记：我的错误优化" class="headerlink" title="小记：我的错误优化"></a>小记：我的错误优化</h2><p>未优化的严蔚敏版快速排序算法，这里我测试了两种，一种是标准代码，一种是我错误的优化代码，分别如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    while (lo &lt; hi) &#123;</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[hi] &gt;&#x3D; pivot_e) --hi;</span><br><span class="line">        arr[lo] &#x3D; arr[hi];</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[lo] &lt;&#x3D; pivot_e) ++lo;</span><br><span class="line">        arr[hi] &#x3D; arr[lo];</span><br><span class="line">    &#125;</span><br><span class="line">    arr[lo] &#x3D; pivot_e;</span><br><span class="line">    return lo;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">	    return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition(arr, lo, hi);</span><br><span class="line">    </span><br><span class="line">    QuickSort(arr, lo, pivot-1);</span><br><span class="line">    QuickSort(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 225.75 s</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition(arr, lo, hi);</span><br><span class="line">    </span><br><span class="line">    if (lo &lt; pivot-1) QuickSort(arr, lo, pivot-1);</span><br><span class="line">    if (pivot+1 &lt; hi) QuickSort(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 231.484 s</span><br></pre></td></tr></table></figure>
+<p>我认为这个优化最主要的问题在于if语句，它减少了指令流水和编译器对代码的优化。应该要尽可能避免if语句而使用while,for循环语句，可以增加程序的并行性。<br>至少可以说明为了减少函数跳用而增加多余的if语句对代码执行速度没有显著提升，所以不要进行过早的或多余的优化，除非这个优化可以在复杂度上有显著提升。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" data-id="ck88pfut4000dgkthfbqu7epg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          归并排序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">单例模式-2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

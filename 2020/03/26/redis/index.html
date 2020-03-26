@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>redis | chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Redis常用数据类型 数据类型 type string &#x2F; hash &#x2F; list &#x2F; set（无序集合） &#x2F; sorted set（有序集合）   编码方式 encoding raw &#x2F; int &#x2F; ht &#x2F; zipmap &#x2F; linkedlist ziplist &#x2F; intset   虚拟内存 vm  数据结构的Redis命令 string hash list set sorted set">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis">
+<meta property="og:url" content="https://cng3s.github.io/2020/03/26/redis/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="Redis常用数据类型 数据类型 type string &#x2F; hash &#x2F; list &#x2F; set（无序集合） &#x2F; sorted set（有序集合）   编码方式 encoding raw &#x2F; int &#x2F; ht &#x2F; zipmap &#x2F; linkedlist ziplist &#x2F; intset   虚拟内存 vm  数据结构的Redis命令 string hash list set sorted set">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-26T11:57:33.000Z">
+<meta property="article:modified_time" content="2020-03-26T11:57:56.107Z">
+<meta property="article:author" content="chneg">
+<meta property="article:tag" content="软件">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-redis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/redis/" class="article-date">
+  <time datetime="2020-03-26T11:57:33.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      redis
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis常用数据类型"><a href="#Redis常用数据类型" class="headerlink" title="Redis常用数据类型"></a>Redis常用数据类型</h1><ul>
+<li>数据类型 type<ul>
+<li>string / hash / list / set（无序集合） / sorted set（有序集合）</li>
+</ul>
+</li>
+<li>编码方式 encoding<ul>
+<li>raw / int / ht / zipmap / linkedlist</li>
+<li>ziplist / intset</li>
+</ul>
+</li>
+<li>虚拟内存 vm</li>
+</ul>
+<h1 id="数据结构的Redis命令"><a href="#数据结构的Redis命令" class="headerlink" title="数据结构的Redis命令"></a>数据结构的Redis命令</h1><ul>
+<li>string</li>
+<li>hash</li>
+<li>list</li>
+<li>set</li>
+<li>sorted set</li>
+</ul>
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><ul>
+<li>指定启动端口 – 不指定端口则默认启动（6379）<ul>
+<li>redis-server –port port_number</li>
+<li>redis-cli -p port_number -h ip_address -a password（密码可以在配置文件中配置）</li>
+<li>redis-cli -p port_number -h ip_address(默认本机127.0.0.1) shutdown</li>
+</ul>
+</li>
+<li>指定配置文件启动<ul>
+<li>redis-server configution_file_path</li>
+</ul>
+</li>
+<li>清屏<ul>
+<li>clear</li>
+</ul>
+</li>
+<li>清空所有名字空间里的所有数据结构并把所有的数据都持久化到本地硬盘中<ul>
+<li>flushall</li>
+</ul>
+</li>
+<li>清空当前名字空间的所有数据结构<ul>
+<li>flushdb</li>
+</ul>
+</li>
+<li>了解 redis 的当前信息<ul>
+<li>info</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis键命令"><a href="#Redis键命令" class="headerlink" title="Redis键命令"></a>Redis键命令</h1><ul>
+<li>更换名字空间<ul>
+<li>select namespace_number (默认从0开始)</li>
+<li>切换不同的名字空间里面的元素变量也是当前名字空间创建的</li>
+</ul>
+</li>
+<li>建立键值对<ul>
+<li>set key value </li>
+</ul>
+</li>
+<li>删除键<ul>
+<li>del key</li>
+</ul>
+</li>
+<li>判断键是否存在<ul>
+<li>exists key</li>
+</ul>
+</li>
+<li>查看key的剩余生存时间<ul>
+<li>ttl key</li>
+</ul>
+</li>
+<li>查看所有的key<ul>
+<li>keys *</li>
+</ul>
+</li>
+<li>设置key的剩余生存时间<ul>
+<li>expire key ttl (单位：s)</li>
+<li>设置的key不存在返回 -2</li>
+<li>设置的key是永久的返回 -1</li>
+<li>ttl秒后key就被删掉了</li>
+</ul>
+</li>
+<li>查看 key 类型<ul>
+<li>type key</li>
+</ul>
+</li>
+<li>随机生成一个key<ul>
+<li>randomkey</li>
+</ul>
+</li>
+<li>获得key的value<ul>
+<li>get key</li>
+</ul>
+</li>
+<li>重命名key<ul>
+<li>rename old_keyname new_keyname</li>
+<li>如果new_keyname已经存在，则new_keyname的value被赋值为old_keyname</li>
+<li>而old_keyname被删除，new_keyname原来的value也被覆盖了</li>
+<li>即使new_keyname不存在，仍是键为new_keyname，值为old_keyname</li>
+</ul>
+</li>
+<li>以nx结尾的命令<ul>
+<li>这些命令都是带有判断操作的</li>
+<li>比如renamenx a b，且a, b键都存在，这个时候就不会生效</li>
+<li>再比如setnx a aa, 且a存在，则不会生效。如果不存在则生效。</li>
+<li>且这个操作要么都成功，要么都失败，这个特性叫原子性</li>
+<li>比如 msetnx q q uuu uuu，如果q存在且uuu不存在，则uuu也不会被赋值，因为q建立失败了</li>
+</ul>
+</li>
+<li>以ex结尾的命令<ul>
+<li>ex即expire的缩写，即这些键带有生存时间</li>
+<li>如 setex c 100 c , key: c, value:c, ttl:100s</li>
+<li>且以p开头的<ul>
+<li>设置为毫秒级别</li>
+<li>psetex d 10000 d, key: d, value: d, ttl: 10000ms</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取元素范围<ul>
+<li>getrange key left_limit right_limit</li>
+<li>如果数据结构没有range范围就返回空，像线性集合的数据结构都有range</li>
+</ul>
+</li>
+<li>获取并设置<ul>
+<li>getset key newvalue</li>
+<li>设置key为newvalue并且返回oldvalue</li>
+<li>可以理解为先 get 操作再 set 操作</li>
+</ul>
+</li>
+<li>同时设置一个或多个<ul>
+<li>mset key1 val1 key2 val2 ….</li>
+<li>其中key1 key2 … 都是string类型</li>
+</ul>
+</li>
+<li>同时获取一个或多个<ul>
+<li>mget key1 key2 key3 ….</li>
+</ul>
+</li>
+<li>递增或递减<ul>
+<li>incr key<ul>
+<li>key的value每次增加1</li>
+</ul>
+</li>
+<li>val必须是integer类型才能用，否则失败</li>
+<li>incrby key range<ul>
+<li>每次增加range的值</li>
+</ul>
+</li>
+<li>decr key</li>
+<li>decrby key range</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h1><h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><ul>
+<li>追加<ul>
+<li>append key append_value</li>
+<li>如果对integer的value追加string，则类型转为string</li>
+</ul>
+</li>
+<li>获取长度<ul>
+<li>strlen key</li>
+</ul>
+</li>
+</ul>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><ul>
+<li>h开头都是hash相关的数据结构的操作</li>
+<li>hexists / hget / hgetall / hkeys /</li>
+<li>hset map name jim - 创建一个名为map的哈希，并放入 name-jim</li>
+<li>hkeys map - 返回map所有的key</li>
+<li>hvals map - 返回map所有的value</li>
+<li>hgetall map - 返回map所有的键值对</li>
+<li>hlen map - 返回map的元素</li>
+<li>hmget map key1 key2 - 返回key1 key2的值</li>
+<li>hmset key1 value1 key2 value2</li>
+<li>hdel map key1 key2 …</li>
+<li>hsetnx map keyname keyvalue </li>
+</ul>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><ul>
+<li>l开头的都是链表相关的操作且是从左开始</li>
+<li>r开头的也是链表相关的操作且从右开始</li>
+<li>从名为list的列表最左边开始逐个放入元素<ul>
+<li>lpush list 1 2 3 4 5 6 7 8 9 10</li>
+<li>list: 10 9 8 7 6 5 4 3 2 1</li>
+<li>rpush rlist 1 2 3 4 5 6 7 8 9 10</li>
+<li>rlist: 1 2 3 4 5 6 7 8 9 10</li>
+</ul>
+</li>
+<li>链表长度<ul>
+<li>llen list</li>
+</ul>
+</li>
+<li>获取链表范围元素<ul>
+<li>lrange list left_limit right_limit 都是左闭右闭区间，不要和go搞混</li>
+</ul>
+</li>
+<li>设置链表pos位置的元素值为val<ul>
+<li>lset list pos val</li>
+</ul>
+</li>
+<li>获取pos元素值<ul>
+<li>lindex list pos</li>
+</ul>
+</li>
+<li>移除<ul>
+<li>lpop list - 移除list最左边的元素</li>
+<li>rpop list</li>
+</ul>
+</li>
+</ul>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ul>
+<li>s开头的是set，且set是不可重复的。添加重复的元素会失败。</li>
+<li>创建并添加<ul>
+<li>sadd set a b c d</li>
+</ul>
+</li>
+<li>获取set中元素数量<ul>
+<li>scard set</li>
+</ul>
+</li>
+<li>rename set set1</li>
+<li>查看set1中的元素<ul>
+<li>smembers set1</li>
+</ul>
+</li>
+<li>sdiff set1 set2<ul>
+<li>求差集 set1 - set2</li>
+</ul>
+</li>
+<li>求交集<ul>
+<li>sinter set1 set2</li>
+</ul>
+</li>
+<li>求并集<ul>
+<li>sunion set1 set2</li>
+</ul>
+</li>
+<li>返回set1的number个随机元素<ul>
+<li>srandmember set1 number</li>
+<li>srandmember set1 2 - 随机两个元素返回</li>
+</ul>
+</li>
+<li>判断key的value是不是成员<ul>
+<li>sismember set1 a - 判断a是不是set1的成员</li>
+</ul>
+</li>
+<li>移出一个或多个set1成员<ul>
+<li>srem set1 member1 member2 ….</li>
+</ul>
+</li>
+<li>移除set2中一个<strong>随机的</strong>元素并返回<ul>
+<li>spop set2</li>
+<li>可以用作订单号池，生成一些不重复的订单号放在redis set中，需要生成订单号的时候直接从这里拿</li>
+</ul>
+</li>
+</ul>
+<h2 id="有序集合-sortedset"><a href="#有序集合-sortedset" class="headerlink" title="有序集合 sortedset"></a>有序集合 sortedset</h2><ul>
+<li>sortedset 是哈希表保证了o(1)，但是还可以保证顺序</li>
+<li>z开头的都是有序集合</li>
+<li>添加和创建3个键 - 值对，其中键必须是数字来保证sortedset的顺序性<ul>
+<li>也可以看作键 - 键对，第一个键是sortedset用来保证顺序的，第二个键是我们需要的内容</li>
+<li>zadd sortedset 100 a 200 b 300 c</li>
+</ul>
+</li>
+<li>zcard sortedset 返回sortedset元素个数</li>
+<li>返回键为指定区间的元素<ul>
+<li>zcount sortedset left_limit right_limit</li>
+<li>zcount sortedset 0 220 –&gt; 返回2，即 100 200两个</li>
+</ul>
+</li>
+<li>zrank key  返回key的索引值<ul>
+<li>zrank sortedset a –&gt; 0，即排在第一个</li>
+</ul>
+</li>
+<li>增加键的大小<ul>
+<li>zincrby sortedset incr_value value</li>
+<li>zincrby sortedset 1000 a –&gt; a的顺序变成了最后一个(200 b 300 c 1100 a)</li>
+</ul>
+</li>
+<li>根据范围拿元素<ul>
+<li>zrange sortedset left right – 只返回排序后的键</li>
+<li>zrange sortedset left right withscores – 同时返回值</li>
+</ul>
+</li>
+</ul>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li>key 都是string类型的，不论是数字还是字符串当key</li>
+<li>redis区间都是左闭右闭，不要和go搞混咯（go是左闭右开）</li>
+</ul>
+<h1 id="Redis小技巧"><a href="#Redis小技巧" class="headerlink" title="Redis小技巧"></a>Redis小技巧</h1><ol>
+<li><p>redis-server不能通过Ctrl-C关闭，而应该通过redis-cli shutdown关闭<br>使用redis-cli shutdown关闭redis-server中的数据会持久化到硬盘，否则会丢失。<br>当然你也可以通过save命令持久化，但前者是个更好的习惯。</p>
+</li>
+<li><p>redis可以通过:来区别名字空间，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set chneg:666:chnegkey chnegvalue</span><br></pre></td></tr></table></figure>
+<p>就代表了chneg名字空间下的 666名字空间下的 chnegkey 对应的值是 chnegvalue。同理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set chneg:666:heikey keyvalue</span><br></pre></td></tr></table></figure>
+<p>此时heikey就和chnegkey是一个名字空间下的两个不同的key<br>这个功能一定是一个非常好用的功能，不同的业务在同一个大的db（通过select指定的名字空间）下我们可以设计不同的名字空间来区别业务，查找也非常方便。但如果真的是要使用:则需要转义（/:）一下就可以了。</p>
+</li>
+<li><p>monitor 命令</p>
+</li>
+</ol>
+<ul>
+<li>该命令可以监视所有和redis通信的信息，排查问题的时候非常有用</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/redis/" data-id="ck88pfusw0002gkth387yhdvu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/26/nginx/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          nginx
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">设计模式七大原则</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

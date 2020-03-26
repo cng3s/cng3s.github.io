@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="love game, love os, love compiler, love my life...">
+<meta property="og:type" content="website">
+<meta property="og:title" content="chneg">
+<meta property="og:url" content="https://cng3s.github.io/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="love game, love os, love compiler, love my life...">
+<meta property="og:locale" content="zh">
+<meta property="article:author" content="chneg">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/git/" class="article-date">
+  <time datetime="2020-03-26T11:59:17.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/git/">git</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一、开发分支（dev）上的代码达到上线的标准后，要合并到 master 分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line">git pull</span><br><span class="line">git checkout master</span><br><span class="line">git merge dev</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>二、当master代码改动了，需要更新开发分支（dev）上的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git pull</span><br><span class="line">git checkout dev</span><br><span class="line">git merge master</span><br><span class="line">git push -u origin dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="Important-commands"><a href="#Important-commands" class="headerlink" title="Important commands"></a>Important commands</h1><ul>
+<li>git init # make a new repository  </li>
+<li>git clone # initialize a repository locally from a remote server  </li>
+<li>git status # MOST IMPORTANT COMMAND</li>
+<li>git log # show commit history. Can use –decorate –graph –all to make it pretty</li>
+<li>git add # stages files to be committed. Flags: –a, -u</li>
+<li>git commit -m # commit the changes in the staged files (use good messages!)</li>
+<li>git push # push changes to a remote server (–set-upstream origin branchname)</li>
+<li>git pull # pull changes from a server</li>
+<li>git branch # make a new branch</li>
+<li>git checkout # switch to a different branch. Can use -b to make a new branch</li>
+<li>git merge name # merge “name” branch into your current branch</li>
+<li>git reset HEAD # Used to unstage files</li>
+<li>git reset –hard + hash # Used to reset to an old commit (with a commit hash)</li>
+</ul>
+<h1 id="Configuring-git"><a href="#Configuring-git" class="headerlink" title="Configuring git"></a>Configuring git</h1><p>$ git config –global user.name “<Your Name>“<br>$ git config –global user.email “<Your Email>”<br>$ git config –global push.default simple<br>(Make sure the email is your Andrew ID, and make sure to add that email to your GitHub account!)</p>
+<h1 id="Committing-pushing-pulling"><a href="#Committing-pushing-pulling" class="headerlink" title="Committing, pushing, pulling"></a>Committing, pushing, pulling</h1><ol>
+<li>$ lswe have 4 files here </li>
+<li>$ git status # branch is up to date with the server, nothing to commit</li>
+<li>$ git log –graph –decorate –all<ul>
+<li>i.Shows a pretty graph of the commit history.</li>
+</ul>
+</li>
+<li>$ vim example.txt # lets make some changes to example.txt</li>
+<li>$ git status # now shows that we have unstaged files</li>
+<li>$ git add example.txt # stages the file to be committed</li>
+<li>$ git reset HEAD example.txt # unstages the file (to show you how to do that)</li>
+<li>$ git add example.txt # to restage the file</li>
+<li>$ git commit -m  “insert a relevant commit message here”</li>
+<li>$ git status # shows you are 1 commit ahead of “origin” = remote server</li>
+<li>$ git push # this updates the remote server</li>
+<li>$ git log –graph –decorate –all #  now we can see the new commit on top of all the old ones</li>
+</ol>
+<h1 id="Merging"><a href="#Merging" class="headerlink" title="Merging"></a>Merging</h1><ol>
+<li>$ git log –graph –decorate –all # note the other branch “realistic ending” that branches away from master</li>
+<li>$ git checkout realistic_ending switch to the other branch</li>
+<li>$ git branch shows all of our branches</li>
+<li>$ ls note that there are different files here</li>
+<li>vim example.txt # we can see the story is different than in the master branch-finish it!</li>
+<li>Add and commit the file, push to the server.</li>
+<li>$ git checkout master # switch back to the master branch</li>
+<li>$ git merge realistic_ending # will attempt to merge the two branches, but there’s a conflict<ol>
+<li>a.$ git statusshows that the conflict is in example.txt</li>
+<li>b.$ vim example.txt fix the story</li>
+<li>c.$ git add example.txt</li>
+<li>d.$ git commit -m “appropriate message for a merge” now the merge is complete</li>
+</ol>
+</li>
+<li>$ git log – decorate –graph –all # shows that now you still have 2 branches, but they’ve been merged and point to the same files</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/git/" data-id="ck88pfusz0004gkthhqk7743f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/nginx/" class="article-date">
+  <time datetime="2020-03-26T11:58:10.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/nginx/">nginx</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Nginx配置反向代理的一些坑"><a href="#Nginx配置反向代理的一些坑" class="headerlink" title="Nginx配置反向代理的一些坑"></a>Nginx配置反向代理的一些坑</h1><ul>
+<li>目标：做一个一机多tomcat模拟集群，使用nginx做反向代理到本机不同的端口上</li>
+<li>反向代理的网址配置：abc11.com<h2 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h2></li>
+</ul>
+<ol>
+<li>将多个tomcat程序拷贝到文件夹并配置环境变量，配置tomcat集群有以下几个要点：<ol>
+<li>修改server.xml文件，把端口区分开来（如：tomcat1是8080，tomcat2就不能是8080了）</li>
+<li>将不同的tomcat环境变量区分开来<ul>
+<li>linux 在/etc/profile，windows在高级系统设置中</li>
+<li>添加不同名字的环境变量<ul>
+<li>windows：将CATALINA_HOME 和 CATALINA_BASE 改成对应的环境变量</li>
+<li>linux: linux中直接在catalina.sh中将CATALINA_BASE，CATALINA_HOME赋值成你的环境变量</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>使用nginx反向代理<ol>
+<li>nginx.conf中配置  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">	worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">	include       mime.types;</span><br><span class="line">	default_type  application&#x2F;octet-stream;</span><br><span class="line">	sendfile        on;</span><br><span class="line">	keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen       80;</span><br><span class="line">		server_name  localhost;</span><br><span class="line">		location &#x2F; &#123;</span><br><span class="line">			root   html;</span><br><span class="line">			index  index.html index.htm;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	# 我们将要反向代理的配置文件放在vhost&#x2F;下</span><br><span class="line">	# 这样做的好处就是目录结构清晰，nginx配置文件和反向代理配置文件分离</span><br><span class="line">	include vhost&#x2F;*.conf; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>vhost中的配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">upstream www.imooc11.com &#123;</span><br><span class="line">	server 127.0.0.1:8080;</span><br><span class="line">	server 127.0.0.1:9080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	autoindex on;</span><br><span class="line">	server_name www.imooc11.com imooc11.com;</span><br><span class="line">	#access_log &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;access.log combined;</span><br><span class="line">	index index.html index.htm index.jsp index.php;</span><br><span class="line">	if ( $query_string ~* &quot;.*[\;&#39;\&lt;\&gt;].*&quot; )&#123;</span><br><span class="line">			return 404;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location &#x2F; &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com&#x2F;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|ico)$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 30d;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(js|css)?$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 7d;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+注意这里的坑是最大的，文件目录千万不可以写错。<br>如果写错了，日志不会提醒你，而且反向代理不会成功，我搞了几个小时才在linux服务器下发现问题。<br>然后把windows下的nginx改成功了。<br>下面是我之前的错误配置文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">upstream www.imooc11.com &#123;</span><br><span class="line">	server 127.0.0.1:8080;</span><br><span class="line">	server 127.0.0.1:9080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	autoindex on;</span><br><span class="line">	server_name www.imooc11.com imooc11.com;</span><br><span class="line"></span><br><span class="line">	# 这里错误，windows下没有这样的目录</span><br><span class="line">	access_log &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;access.log combined;</span><br><span class="line">	index index.html index.htm index.jsp index.php;</span><br><span class="line">	if ( $query_string ~* &quot;.*[\;&#39;\&lt;\&gt;].*&quot; )&#123;</span><br><span class="line">		return 404;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location &#x3D; &#x2F; &#123;</span><br><span class="line">		# 这里错误，没有这样的目录</span><br><span class="line">		root &#x2F;product&#x2F;dist&#x2F;view;</span><br><span class="line">		index index.html;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.html$ &#123;</span><br><span class="line">		# 这里错误</span><br><span class="line">		root &#x2F;product&#x2F;front&#x2F;mmall_fe&#x2F;dist&#x2F;view;</span><br><span class="line">		index index.html;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location &#x2F; &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com&#x2F;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|ico)$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 30d;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(js|css)?$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 7d;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+所以还是要把别人的配置文件想清楚再用，没日志记录是最糟糕的。<br>希望以后不要再碰到这种。。。。。</li>
+<li>修改host文件<ul>
+<li>windows: Windows/System32/driver/etc/hosts中添加</li>
+<li>linux: /etc/hosts中添加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 www.imooc11.com</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>文章到这里，反向代理配置就成功了。<br>如果需要添加新的tomcat服务器，在vhost下继续添加相应的配置即可。<br>还有如服务器权重配置参数 wight …等都在upstream那块设置。<br>nginx不愧是妈妈桑。        </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/nginx/" data-id="ck88pfusu0001gkth3ugzhvxm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-redis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/redis/" class="article-date">
+  <time datetime="2020-03-26T11:57:33.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/redis/">redis</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redis常用数据类型"><a href="#Redis常用数据类型" class="headerlink" title="Redis常用数据类型"></a>Redis常用数据类型</h1><ul>
+<li>数据类型 type<ul>
+<li>string / hash / list / set（无序集合） / sorted set（有序集合）</li>
+</ul>
+</li>
+<li>编码方式 encoding<ul>
+<li>raw / int / ht / zipmap / linkedlist</li>
+<li>ziplist / intset</li>
+</ul>
+</li>
+<li>虚拟内存 vm</li>
+</ul>
+<h1 id="数据结构的Redis命令"><a href="#数据结构的Redis命令" class="headerlink" title="数据结构的Redis命令"></a>数据结构的Redis命令</h1><ul>
+<li>string</li>
+<li>hash</li>
+<li>list</li>
+<li>set</li>
+<li>sorted set</li>
+</ul>
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><ul>
+<li>指定启动端口 – 不指定端口则默认启动（6379）<ul>
+<li>redis-server –port port_number</li>
+<li>redis-cli -p port_number -h ip_address -a password（密码可以在配置文件中配置）</li>
+<li>redis-cli -p port_number -h ip_address(默认本机127.0.0.1) shutdown</li>
+</ul>
+</li>
+<li>指定配置文件启动<ul>
+<li>redis-server configution_file_path</li>
+</ul>
+</li>
+<li>清屏<ul>
+<li>clear</li>
+</ul>
+</li>
+<li>清空所有名字空间里的所有数据结构并把所有的数据都持久化到本地硬盘中<ul>
+<li>flushall</li>
+</ul>
+</li>
+<li>清空当前名字空间的所有数据结构<ul>
+<li>flushdb</li>
+</ul>
+</li>
+<li>了解 redis 的当前信息<ul>
+<li>info</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis键命令"><a href="#Redis键命令" class="headerlink" title="Redis键命令"></a>Redis键命令</h1><ul>
+<li>更换名字空间<ul>
+<li>select namespace_number (默认从0开始)</li>
+<li>切换不同的名字空间里面的元素变量也是当前名字空间创建的</li>
+</ul>
+</li>
+<li>建立键值对<ul>
+<li>set key value </li>
+</ul>
+</li>
+<li>删除键<ul>
+<li>del key</li>
+</ul>
+</li>
+<li>判断键是否存在<ul>
+<li>exists key</li>
+</ul>
+</li>
+<li>查看key的剩余生存时间<ul>
+<li>ttl key</li>
+</ul>
+</li>
+<li>查看所有的key<ul>
+<li>keys *</li>
+</ul>
+</li>
+<li>设置key的剩余生存时间<ul>
+<li>expire key ttl (单位：s)</li>
+<li>设置的key不存在返回 -2</li>
+<li>设置的key是永久的返回 -1</li>
+<li>ttl秒后key就被删掉了</li>
+</ul>
+</li>
+<li>查看 key 类型<ul>
+<li>type key</li>
+</ul>
+</li>
+<li>随机生成一个key<ul>
+<li>randomkey</li>
+</ul>
+</li>
+<li>获得key的value<ul>
+<li>get key</li>
+</ul>
+</li>
+<li>重命名key<ul>
+<li>rename old_keyname new_keyname</li>
+<li>如果new_keyname已经存在，则new_keyname的value被赋值为old_keyname</li>
+<li>而old_keyname被删除，new_keyname原来的value也被覆盖了</li>
+<li>即使new_keyname不存在，仍是键为new_keyname，值为old_keyname</li>
+</ul>
+</li>
+<li>以nx结尾的命令<ul>
+<li>这些命令都是带有判断操作的</li>
+<li>比如renamenx a b，且a, b键都存在，这个时候就不会生效</li>
+<li>再比如setnx a aa, 且a存在，则不会生效。如果不存在则生效。</li>
+<li>且这个操作要么都成功，要么都失败，这个特性叫原子性</li>
+<li>比如 msetnx q q uuu uuu，如果q存在且uuu不存在，则uuu也不会被赋值，因为q建立失败了</li>
+</ul>
+</li>
+<li>以ex结尾的命令<ul>
+<li>ex即expire的缩写，即这些键带有生存时间</li>
+<li>如 setex c 100 c , key: c, value:c, ttl:100s</li>
+<li>且以p开头的<ul>
+<li>设置为毫秒级别</li>
+<li>psetex d 10000 d, key: d, value: d, ttl: 10000ms</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取元素范围<ul>
+<li>getrange key left_limit right_limit</li>
+<li>如果数据结构没有range范围就返回空，像线性集合的数据结构都有range</li>
+</ul>
+</li>
+<li>获取并设置<ul>
+<li>getset key newvalue</li>
+<li>设置key为newvalue并且返回oldvalue</li>
+<li>可以理解为先 get 操作再 set 操作</li>
+</ul>
+</li>
+<li>同时设置一个或多个<ul>
+<li>mset key1 val1 key2 val2 ….</li>
+<li>其中key1 key2 … 都是string类型</li>
+</ul>
+</li>
+<li>同时获取一个或多个<ul>
+<li>mget key1 key2 key3 ….</li>
+</ul>
+</li>
+<li>递增或递减<ul>
+<li>incr key<ul>
+<li>key的value每次增加1</li>
+</ul>
+</li>
+<li>val必须是integer类型才能用，否则失败</li>
+<li>incrby key range<ul>
+<li>每次增加range的值</li>
+</ul>
+</li>
+<li>decr key</li>
+<li>decrby key range</li>
+</ul>
+</li>
+</ul>
+<h1 id="Redis数据结构"><a href="#Redis数据结构" class="headerlink" title="Redis数据结构"></a>Redis数据结构</h1><h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><ul>
+<li>追加<ul>
+<li>append key append_value</li>
+<li>如果对integer的value追加string，则类型转为string</li>
+</ul>
+</li>
+<li>获取长度<ul>
+<li>strlen key</li>
+</ul>
+</li>
+</ul>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><ul>
+<li>h开头都是hash相关的数据结构的操作</li>
+<li>hexists / hget / hgetall / hkeys /</li>
+<li>hset map name jim - 创建一个名为map的哈希，并放入 name-jim</li>
+<li>hkeys map - 返回map所有的key</li>
+<li>hvals map - 返回map所有的value</li>
+<li>hgetall map - 返回map所有的键值对</li>
+<li>hlen map - 返回map的元素</li>
+<li>hmget map key1 key2 - 返回key1 key2的值</li>
+<li>hmset key1 value1 key2 value2</li>
+<li>hdel map key1 key2 …</li>
+<li>hsetnx map keyname keyvalue </li>
+</ul>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><ul>
+<li>l开头的都是链表相关的操作且是从左开始</li>
+<li>r开头的也是链表相关的操作且从右开始</li>
+<li>从名为list的列表最左边开始逐个放入元素<ul>
+<li>lpush list 1 2 3 4 5 6 7 8 9 10</li>
+<li>list: 10 9 8 7 6 5 4 3 2 1</li>
+<li>rpush rlist 1 2 3 4 5 6 7 8 9 10</li>
+<li>rlist: 1 2 3 4 5 6 7 8 9 10</li>
+</ul>
+</li>
+<li>链表长度<ul>
+<li>llen list</li>
+</ul>
+</li>
+<li>获取链表范围元素<ul>
+<li>lrange list left_limit right_limit 都是左闭右闭区间，不要和go搞混</li>
+</ul>
+</li>
+<li>设置链表pos位置的元素值为val<ul>
+<li>lset list pos val</li>
+</ul>
+</li>
+<li>获取pos元素值<ul>
+<li>lindex list pos</li>
+</ul>
+</li>
+<li>移除<ul>
+<li>lpop list - 移除list最左边的元素</li>
+<li>rpop list</li>
+</ul>
+</li>
+</ul>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><ul>
+<li>s开头的是set，且set是不可重复的。添加重复的元素会失败。</li>
+<li>创建并添加<ul>
+<li>sadd set a b c d</li>
+</ul>
+</li>
+<li>获取set中元素数量<ul>
+<li>scard set</li>
+</ul>
+</li>
+<li>rename set set1</li>
+<li>查看set1中的元素<ul>
+<li>smembers set1</li>
+</ul>
+</li>
+<li>sdiff set1 set2<ul>
+<li>求差集 set1 - set2</li>
+</ul>
+</li>
+<li>求交集<ul>
+<li>sinter set1 set2</li>
+</ul>
+</li>
+<li>求并集<ul>
+<li>sunion set1 set2</li>
+</ul>
+</li>
+<li>返回set1的number个随机元素<ul>
+<li>srandmember set1 number</li>
+<li>srandmember set1 2 - 随机两个元素返回</li>
+</ul>
+</li>
+<li>判断key的value是不是成员<ul>
+<li>sismember set1 a - 判断a是不是set1的成员</li>
+</ul>
+</li>
+<li>移出一个或多个set1成员<ul>
+<li>srem set1 member1 member2 ….</li>
+</ul>
+</li>
+<li>移除set2中一个<strong>随机的</strong>元素并返回<ul>
+<li>spop set2</li>
+<li>可以用作订单号池，生成一些不重复的订单号放在redis set中，需要生成订单号的时候直接从这里拿</li>
+</ul>
+</li>
+</ul>
+<h2 id="有序集合-sortedset"><a href="#有序集合-sortedset" class="headerlink" title="有序集合 sortedset"></a>有序集合 sortedset</h2><ul>
+<li>sortedset 是哈希表保证了o(1)，但是还可以保证顺序</li>
+<li>z开头的都是有序集合</li>
+<li>添加和创建3个键 - 值对，其中键必须是数字来保证sortedset的顺序性<ul>
+<li>也可以看作键 - 键对，第一个键是sortedset用来保证顺序的，第二个键是我们需要的内容</li>
+<li>zadd sortedset 100 a 200 b 300 c</li>
+</ul>
+</li>
+<li>zcard sortedset 返回sortedset元素个数</li>
+<li>返回键为指定区间的元素<ul>
+<li>zcount sortedset left_limit right_limit</li>
+<li>zcount sortedset 0 220 –&gt; 返回2，即 100 200两个</li>
+</ul>
+</li>
+<li>zrank key  返回key的索引值<ul>
+<li>zrank sortedset a –&gt; 0，即排在第一个</li>
+</ul>
+</li>
+<li>增加键的大小<ul>
+<li>zincrby sortedset incr_value value</li>
+<li>zincrby sortedset 1000 a –&gt; a的顺序变成了最后一个(200 b 300 c 1100 a)</li>
+</ul>
+</li>
+<li>根据范围拿元素<ul>
+<li>zrange sortedset left right – 只返回排序后的键</li>
+<li>zrange sortedset left right withscores – 同时返回值</li>
+</ul>
+</li>
+</ul>
+<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
+<li>key 都是string类型的，不论是数字还是字符串当key</li>
+<li>redis区间都是左闭右闭，不要和go搞混咯（go是左闭右开）</li>
+</ul>
+<h1 id="Redis小技巧"><a href="#Redis小技巧" class="headerlink" title="Redis小技巧"></a>Redis小技巧</h1><ol>
+<li><p>redis-server不能通过Ctrl-C关闭，而应该通过redis-cli shutdown关闭<br>使用redis-cli shutdown关闭redis-server中的数据会持久化到硬盘，否则会丢失。<br>当然你也可以通过save命令持久化，但前者是个更好的习惯。</p>
+</li>
+<li><p>redis可以通过:来区别名字空间，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set chneg:666:chnegkey chnegvalue</span><br></pre></td></tr></table></figure>
+<p>就代表了chneg名字空间下的 666名字空间下的 chnegkey 对应的值是 chnegvalue。同理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set chneg:666:heikey keyvalue</span><br></pre></td></tr></table></figure>
+<p>此时heikey就和chnegkey是一个名字空间下的两个不同的key<br>这个功能一定是一个非常好用的功能，不同的业务在同一个大的db（通过select指定的名字空间）下我们可以设计不同的名字空间来区别业务，查找也非常方便。但如果真的是要使用:则需要转义（/:）一下就可以了。</p>
+</li>
+<li><p>monitor 命令</p>
+</li>
+</ol>
+<ul>
+<li>该命令可以监视所有和redis通信的信息，排查问题的时候非常有用</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/redis/" data-id="ck88pfusw0002gkth387yhdvu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-设计模式七大原则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/" class="article-date">
+  <time datetime="2020-03-26T11:54:24.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="开闭原则-最重要的基础原则"><a href="#开闭原则-最重要的基础原则" class="headerlink" title="开闭原则 - 最重要的基础原则"></a>开闭原则 - 最重要的基础原则</h1><ul>
+<li>定义：一个软件实体，如类、模块和方法应该对扩展开放，对修改关闭</li>
+<li>用抽象构建框架，用实线扩展细节</li>
+<li>优点：提高软件系统的可复用性和可维护性  </li>
+</ul>
+<h2 id="我理解中的开闭原则："><a href="#我理解中的开闭原则：" class="headerlink" title="我理解中的开闭原则："></a>我理解中的开闭原则：</h2><p>开闭原则的目标是不改动现有模块基础上通过添加新的模块满足软件需求。<br>这样做的一大好处既是现有模块不变动，以现有模块为基础开发的服务也不需要变动。<br>软件开发中越底层的类所变动之后需要的代价越高。<br>所以应尽可能地改变最上层的模块或者添加新的模块满足需求。  </p>
+<h2 id="实例（openclose）"><a href="#实例（openclose）" class="headerlink" title="实例（openclose）"></a>实例（openclose）</h2><p>问题：<br>添加JavaDiscountCourse这个类来实现真的好吗？<br>如果需要多个课程打折，不是也要添加多个类来实现？<br>怎么感觉远不如直接在接口中添加相应的方法来的方便？  </p>
+<p>我的回答：<br>我认为设计模式不是一个教你怎么方便编码的课程，而是教你怎么对代码解耦、减少变动带来的影响的课程。所以这些问题并不是设计模式需要解决的。<br>使用设计模式编码可能更加繁琐，但是更加繁琐编码的目的是需要修改需求的时候变得更轻松，降低因为修改而带来的风险。<br>设计模式就是一种抽象方法，通过抽象方法来把变动和东西和不变的东西彻底分离<br>相对于细节的东西，抽象的东西总是更加的稳定。所以软件工程中使用设计模式来进行高层次的抽象。<br>设计模式核心思想就是：<strong>面向接口编程</strong>，接口即契约。不要改变接口，扩展它。</p>
+<h1 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h1><ul>
+<li>定义：不要存在多于一个导致类变更的原因</li>
+<li>一个 类/接口/方法 只负责一项职责</li>
+<li>优点：降低类复杂度、提高类可读性、提高系统可维护性、降低变更引起风险</li>
+</ul>
+<p>我的理解：<br>其实是很简单的软件行业的心念念：每个方法只做一件事。<br>这样有什么优点呢？</p>
+<ul>
+<li>由于一个方法只做一件事，那么程序员如果修改一个方法弄错了，不会导致其他方法出现问题<ul>
+<li>如果不这样做，比如一个方法中做好几件事，那么可能一个地方出现bug导致其他所有方法都出现问题</li>
+</ul>
+</li>
+<li>清晰好修改，保持了正交性</li>
+<li>如果一个方法不可避免做了两三件事，请把两三件事独立出来变成单一的方法，然后组合这两三个方法。</li>
+</ul>
+<p>这样有什么缺点呢？</p>
+<ul>
+<li>类如果执行单一职责原则会导致类的数量爆炸</li>
+<li>所以需要平衡掌握。类可以不需要单一职责，而方法/接口要做到单一职责</li>
+</ul>
+<h1 id="迪米特原则"><a href="#迪米特原则" class="headerlink" title="迪米特原则"></a>迪米特原则</h1><ul>
+<li>定义：一个对象应该对其他对象保持最少的了解，又叫最少知道原则</li>
+<li>尽量降低类与类的耦合</li>
+<li>优点：降低类耦合</li>
+<li>要做到<strong>适度</strong>，如果过分地使用最少知道原则，则会导致过多的中间类</li>
+<li>如果一个方法放到A类也行，放到B类也行，应该放到哪个类中？<ul>
+<li>如果一个方法放到该类中，既不增加类间关系，也不对本类带来负面影响，则放到该类中是可行的</li>
+</ul>
+</li>
+<li>强调只和朋友交流，不和陌生人说话<ul>
+<li>朋友：出现在成员变量、方法的输入、输出参数中的类称为成员朋友类</li>
+<li>而出现在方法体内部的类不属于朋友类</li>
+</ul>
+</li>
+</ul>
+<h1 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h1><ul>
+<li>定义：用多个专门的接口，而不使用单一的总接口。客户端不应该依赖它不需要的接口。</li>
+<li>一个类对一个类的依赖应该建立在最小的接口上</li>
+<li>建立单一接口，不要建立庞大臃肿的接口</li>
+<li>尽量细化接口，接口中的方法尽量少</li>
+<li>注意适度原则，<strong>一定要适度（把握好中庸之道）</strong></li>
+<li>优点：符号高内聚、低耦合的设计思想，具有很好的可读性、可扩展性、可维护性</li>
+<li>适度原则非常重要，设计的时候要多注意思考如何设计才能<strong>适度</strong><ul>
+<li>不能太小，太小也会带来麻烦</li>
+</ul>
+</li>
+</ul>
+<h1 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h1><ul>
+<li>定义<blockquote>
+<p>如果对每个类型为 T1 的对象 o1, 都有类型为 T2 的对象 o2<br>使得以 T1 定义的所有程序 P 在所有的对象 o1 都替换为 o2 时<br>程序 P 的行为没有发生变化，那么类型 T2 就是 T1 的子类型  </p>
+</blockquote>
+</li>
+<li>定义扩展<blockquote>
+<p>一个软件实体如果适用一个父类的话，那一定适用于其子类<br>所有引用父类的地方必须能透明地使用其子类的对象<br>子类对象能够替换父类对象，而程序逻辑不变 </p>
+</blockquote>
+</li>
+</ul>
+<p>我的理解：<br>非常简单，所有父类定义的对象必可以用其子类替换且程序逻辑不变<br>任何一个继承于父类的子类肯定是父类的超集，所以可以替换掉父类且保持逻辑不变  </p>
+<p>但 Override 方法可能重写父类方法而导致程序逻辑发生变化。<br>所以里氏替换原则反对 Override 来重写父类方法。 </p>
+<ul>
+<li><p>引申意义</p>
+<ul>
+<li>子类可以扩展父类功能，但不能改变父类原有功能</li>
+</ul>
+</li>
+<li><p>含义1：</p>
+<ul>
+<li>子类可以实现父类抽象方法，但不能覆盖父类的非抽象方法</li>
+</ul>
+</li>
+<li><p>含义2：</p>
+<ul>
+<li>子类中可以增加自己特有的方法</li>
+</ul>
+</li>
+<li><p>含义3：</p>
+<ul>
+<li>当子类的方法重载父类的方法时，方法的前置条件（即方法的输入/入参）要比父类方法的输入参数更加宽松</li>
+</ul>
+</li>
+<li><p>含义4：</p>
+<ul>
+<li>当子类的方法实现父类的方法时（重写/重载或实现抽象方法），方法的后置条件（即方法的输出/返回值）要比父类更严格或相等</li>
+</ul>
+</li>
+<li><p>优点</p>
+<ul>
+<li>约束继承泛滥，开闭原则的一种体现</li>
+<li>加强程序的健壮性，同时变更时也可做到好的兼容性、维护性、扩展性，降低变更风险</li>
+</ul>
+</li>
+</ul>
+<h1 id="依赖倒置原则"><a href="#依赖倒置原则" class="headerlink" title="依赖倒置原则"></a>依赖倒置原则</h1><ul>
+<li>定义：高层模块不应该依赖底层模块，二者都应该依赖它们共同的抽象</li>
+<li>抽象不应该依赖细节；细节应该依赖抽象</li>
+<li>针对接口编程，不要针对实现编程</li>
+<li>优点：减少类间耦合、提高系统稳定性、代码可读和可维护性、降低修改程序造成的风险</li>
+</ul>
+<p>我的理解：<br>当业务复杂的时候，很容易形成正金字塔型的软件架构，即高层次的业务耦合性过大，内聚性又太小。<br>而依赖倒置原则是认为应该形成倒金字塔型软件架构，即高层次业务耦合性小，内聚性大，且依赖低层次的模块。<br>而低层次的模块非常的多，每个模块功能单一，通过组合这些不同的模块来完成业务逻辑。</p>
+<h1 id="组合-聚合复用原则"><a href="#组合-聚合复用原则" class="headerlink" title="组合/聚合复用原则"></a>组合/聚合复用原则</h1><ul>
+<li>定义：尽量使用对象组合/聚合，而不是继承关系达到软件复用的目的</li>
+<li>优点：<ul>
+<li>系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响比较少</li>
+</ul>
+</li>
+</ul>
+<h1 id="继承差在哪里？"><a href="#继承差在哪里？" class="headerlink" title="继承差在哪里？"></a>继承差在哪里？</h1><ol>
+<li>暴露了类实现的细节，白箱复用，父类实现变动会影响继承的子类</li>
+<li>组合/聚合 不暴露类实现细节，黑箱复用，不影响组合/聚合的类</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/" data-id="ck88pfut5000egkthh7uw27x2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-平衡二叉树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+  <time datetime="2020-03-26T11:50:10.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="二叉平衡树"><a href="#二叉平衡树" class="headerlink" title="二叉平衡树"></a>二叉平衡树</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename K, typename V, typename Compare &#x3D; std::less&lt;K&gt;&gt;</span><br><span class="line">class dsa_avl_map &#123;</span><br><span class="line">public:</span><br><span class="line">	class _node &#123;</span><br><span class="line">	public:</span><br><span class="line">		K               _key;</span><br><span class="line">		V               _val;</span><br><span class="line">		_node            *_l, *_r;</span><br><span class="line">		unsigned int    _height;</span><br><span class="line"></span><br><span class="line">	public:</span><br><span class="line">		explicit _node(K k &#x3D; NULL, V v &#x3D; NULL, _node *l &#x3D; nullptr, _node *r &#x3D; nullptr, unsigned int h &#x3D; 1)</span><br><span class="line">				: _key(k), _val(v), _l(l), _r(r), _height(h) &#123;&#125;</span><br><span class="line">		~_node() &#x3D; default;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">	_node            *_root;</span><br><span class="line">	unsigned int    _size;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	explicit dsa_avl_map()</span><br><span class="line">			: _root(nullptr), _size(0)</span><br><span class="line">	&#123;&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* AVLMap析构函数</span><br><span class="line">		* 先序遍历删除所有节点 *&#x2F;</span><br><span class="line">	~dsa_avl_map()</span><br><span class="line">	&#123;</span><br><span class="line">			auto stack &#x3D; new dsa_stack&lt;_node*&gt;();</span><br><span class="line">			stack-&gt;push(_root);</span><br><span class="line">			for (_node *cur &#x3D; nullptr; !stack-&gt;empty();) &#123;</span><br><span class="line">					cur &#x3D; stack-&gt;pop();</span><br><span class="line">					if (cur-&gt;_l)</span><br><span class="line">							stack-&gt;push(cur-&gt;_l);</span><br><span class="line">					if (cur-&gt;_r)</span><br><span class="line">							stack-&gt;push(cur-&gt;_r);</span><br><span class="line">					delete cur;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">	unsigned int height(_node *_node)</span><br><span class="line">	&#123;</span><br><span class="line">		return _node &#x3D;&#x3D; nullptr ? 0 : _node-&gt;_height;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	unsigned int size()</span><br><span class="line">	&#123;</span><br><span class="line">		return _size;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	V get(K _key)</span><br><span class="line">	&#123;</span><br><span class="line">		_node *_node &#x3D; get_node(_root, _key);</span><br><span class="line">		return _node &#x3D;&#x3D; nullptr ? V(NULL) : _node-&gt;_val;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bool balanced()</span><br><span class="line">	&#123;</span><br><span class="line">		return balanced(_root);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bool balanced(_node *cur)</span><br><span class="line">	&#123;</span><br><span class="line">		return abs(balance_factor(cur)) &lt;&#x3D; 1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	bool contains(K _key)</span><br><span class="line">	&#123;</span><br><span class="line">		return get_node(_root, _key) !&#x3D; nullptr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void set(K _key, V _val)</span><br><span class="line">	&#123;</span><br><span class="line">		_node *_node &#x3D; get_node(_root, _key);</span><br><span class="line">		if (_node &#x3D;&#x3D; nullptr)</span><br><span class="line">				return;</span><br><span class="line">		_node-&gt;_val &#x3D; _val;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* 将键为Key的结点值设置为新值newValue且从beginSearch_node开始查找 *&#x2F;</span><br><span class="line">	void set(_node *begin, K _key, V _val)</span><br><span class="line">	&#123;</span><br><span class="line">		_node *_node &#x3D; get_node(begin, _key);</span><br><span class="line">		if (_node &#x3D;&#x3D; nullptr)</span><br><span class="line">				return;</span><br><span class="line">		_node-&gt;_val &#x3D; _val;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	V rm(K _key)</span><br><span class="line">	&#123;</span><br><span class="line">		_node *_node &#x3D; get_node(_root, _key);</span><br><span class="line">		if (_node !&#x3D; nullptr) &#123;</span><br><span class="line">			_root &#x3D; rm(_root, _key);</span><br><span class="line">			return _node-&gt;_val;</span><br><span class="line">		&#125;</span><br><span class="line">		return V(NULL);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void add(K _key, V _val)</span><br><span class="line">	&#123;</span><br><span class="line">		_root &#x3D; add(_root, _key, _val);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">	&#x2F;* 查找_key相同的节点并返回该节点指针 *&#x2F;</span><br><span class="line">	_node *get_node(_node *_node, K _key)</span><br><span class="line">	&#123;</span><br><span class="line">		if (_node &#x3D;&#x3D; nullptr)</span><br><span class="line">			return nullptr;</span><br><span class="line">		if (_key &#x3D;&#x3D; _node-&gt;_key)</span><br><span class="line">			return _node;</span><br><span class="line">		else if (_key &lt; _node-&gt;_key)</span><br><span class="line">			return get_node(_node-&gt;_l, _key);</span><br><span class="line">		else &#x2F;&#x2F; (_key &gt; _node._key)</span><br><span class="line">			return get_node(_node-&gt;_r, _key);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int balance_factor(_node *_node)</span><br><span class="line">	&#123; return _node &#x3D;&#x3D; nullptr ? 0 : height(_node-&gt;_l) - height(_node-&gt;_r); &#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* 从*_node开始寻找树中最小结点 *&#x2F;</span><br><span class="line">	_node *min_node(_node *_node)</span><br><span class="line">	&#123; return _node-&gt;_l &#x3D;&#x3D; nullptr ? _node : min_node(_node-&gt;_l); &#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* AVL左旋转函数</span><br><span class="line">		* 对节点_node进行向左旋转操作，返回旋转后新的根节点x</span><br><span class="line">		*  _node                            x</span><br><span class="line">		*  &#x2F;  \                          &#x2F;   \</span><br><span class="line">		* T1   x      向左旋转 (y)      _node   z</span><br><span class="line">		*     &#x2F; \   - - - - - - - -&gt;   &#x2F; \   &#x2F; \</span><br><span class="line">		*   T2  z                     T1 T2 T3 T4</span><br><span class="line">		*      &#x2F; \</span><br><span class="line">		*     T3 T4</span><br><span class="line">		* *&#x2F;</span><br><span class="line">	_node* l_rotate(_node *cur)</span><br><span class="line">	&#123;</span><br><span class="line">		_node *x &#x3D; cur-&gt;_r;</span><br><span class="line">		_node *T2 &#x3D; x-&gt;_l;</span><br><span class="line">		&#x2F;&#x2F; 左旋转</span><br><span class="line">		x-&gt;_l &#x3D; cur;</span><br><span class="line">		cur-&gt;_r &#x3D; T2;</span><br><span class="line">		&#x2F;&#x2F;更新结点_height, 这里必须首先更新_node-&gt;_height然后再更新x-&gt;_height。</span><br><span class="line">		cur-&gt;_height &#x3D; std::max(height(cur-&gt;_l), height(cur-&gt;_r)) + 1;</span><br><span class="line">		x-&gt;_height &#x3D; std::max(height(x-&gt;_l), height(x-&gt;_r)) + 1;</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* AVL右旋转函数</span><br><span class="line">		* 对节点_node进行向右旋转操作，返回旋转后新的根节点x</span><br><span class="line">		*         _node                            x</span><br><span class="line">		*         &#x2F; \                           &#x2F;   \</span><br><span class="line">		*        x   T4     向右旋转 (y)        z    _node</span><br><span class="line">		*       &#x2F; \       - - - - - - - -&gt;    &#x2F; \   &#x2F; \</span><br><span class="line">		*      z  T3                       T1  T2 T3 T4</span><br><span class="line">		*     &#x2F; \</span><br><span class="line">		*   T1  T2</span><br><span class="line">		* *&#x2F;</span><br><span class="line">	_node* r_rotate(_node *cur)</span><br><span class="line">	&#123;</span><br><span class="line">		_node *x &#x3D; cur-&gt;_l;</span><br><span class="line">		_node *T3 &#x3D; x-&gt;_r;</span><br><span class="line">		x-&gt;_r &#x3D; cur;</span><br><span class="line">		cur-&gt;_l &#x3D; T3;</span><br><span class="line">		cur-&gt;_height &#x3D; std::max(height(cur-&gt;_l), height(cur-&gt;_r)) + 1;</span><br><span class="line">		x-&gt;_height &#x3D; std::max(height(x-&gt;_l), height(x-&gt;_r)) + 1;</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* 向以_node为根结点的BST中插入元素(_key,_val),递归算法</span><br><span class="line">		* 返回插入新结点后BST的根结点</span><br><span class="line">		* *&#x2F;</span><br><span class="line">	_node *add(_node *cur, K _key, V _val)</span><br><span class="line">	&#123;</span><br><span class="line">		if (cur &#x3D;&#x3D; nullptr) &#123;</span><br><span class="line">			_size++;</span><br><span class="line">			return new _node(_key, _val);</span><br><span class="line">		&#125;</span><br><span class="line">		if (_key &lt; cur-&gt;_key)</span><br><span class="line">			cur-&gt;_l &#x3D; add(cur-&gt;_l, _key, _val);</span><br><span class="line">		else if (_key &gt; cur-&gt;_key)</span><br><span class="line">			cur-&gt;_r &#x3D; add(cur-&gt;_r, _key, _val);</span><br><span class="line">		else &#x2F;&#x2F; _key &#x3D;&#x3D; cur-&gt;_key</span><br><span class="line">			cur-&gt;_val &#x3D; _val;</span><br><span class="line">		&#x2F;&#x2F; 更新cur-&gt;_height</span><br><span class="line">		cur-&gt;_height &#x3D; 1 + std::max(height(cur-&gt;_l), height(cur-&gt;_r));</span><br><span class="line">		&#x2F;&#x2F; 计算平衡因子</span><br><span class="line">		int factor &#x3D; balance_factor(cur);</span><br><span class="line">		&#x2F;* 平衡维护！这里描述的比较重就是深度_height值更大 *&#x2F;</span><br><span class="line">		&#x2F;&#x2F; 当cur的左边比较重并且cur-&gt;_l的左边比较重的时候，cur进行右旋转并返回</span><br><span class="line">		if (factor &gt; 1 &amp;&amp; balance_factor(cur-&gt;_l) &gt;&#x3D; 0)</span><br><span class="line">				return r_rotate(cur);</span><br><span class="line">		&#x2F;&#x2F; 当cur的右边比较重并且cur-&gt;_r的右边比较重的时候，cur进行左旋转并返回</span><br><span class="line">		if (factor &lt; -1 &amp;&amp; balance_factor(cur-&gt;_r) &lt;&#x3D; 0)</span><br><span class="line">				return l_rotate(cur);</span><br><span class="line">		&#x2F;&#x2F; 当cur的左边比较重并且cur-&gt;_l的右边比较重的时候，先对cur-&gt;_l进行左旋转再对cur进行右旋转</span><br><span class="line">		&#x2F;&#x2F;      cur                                cur                            z</span><br><span class="line">		&#x2F;&#x2F;     &#x2F;   \                             &#x2F;    \                         &#x2F;   \</span><br><span class="line">		&#x2F;&#x2F;    x    T4    cur-&gt;_l左旋转        z     T4   cur进行右旋转         x    cur</span><br><span class="line">		&#x2F;&#x2F;  &#x2F;  \        -----------------&gt;    &#x2F;  \       ----------------&gt;   &#x2F; \   &#x2F;  \</span><br><span class="line">		&#x2F;&#x2F; T1  z                             x   T3                        T1 T2  T3  T4</span><br><span class="line">		&#x2F;&#x2F;    &#x2F; \                           &#x2F; \</span><br><span class="line">		&#x2F;&#x2F;   T2 T3                         T1 T2</span><br><span class="line">		if (factor &gt; 1 &amp;&amp; balance_factor(cur-&gt;_l) &lt; 0) &#123;</span><br><span class="line">			cur-&gt;_l &#x3D; l_rotate(cur-&gt;_l);</span><br><span class="line">			return r_rotate(cur);</span><br><span class="line">		&#125;</span><br><span class="line">		&#x2F;&#x2F; 当cur的右边比较重并且cur-&gt;_r的左边比较重的时候，先对cur-&gt;_r进行右旋转再对cur进行左旋转</span><br><span class="line">		&#x2F;&#x2F;     cur                            cur                            z</span><br><span class="line">		&#x2F;&#x2F;    &#x2F;    \                        &#x2F;    \                         &#x2F;   \</span><br><span class="line">		&#x2F;&#x2F;   T1    x    cur-&gt;_r右旋转   T1    z     cur进行左旋转         cur   x</span><br><span class="line">		&#x2F;&#x2F;        &#x2F; \  -----------------&gt;       &#x2F; \  ----------------&gt;   &#x2F;  \   &#x2F; \</span><br><span class="line">		&#x2F;&#x2F;       z  T4                         T2 x                     T1  T2 T3 T4</span><br><span class="line">		&#x2F;&#x2F;      &#x2F; \                              &#x2F; \</span><br><span class="line">		&#x2F;&#x2F;     T2 T3                            T3 T4</span><br><span class="line">		if (factor &lt; -1 &amp;&amp; balance_factor(cur-&gt;_r) &gt; 0) &#123;</span><br><span class="line">			cur-&gt;_r &#x3D; r_rotate(cur-&gt;_r);</span><br><span class="line">			return l_rotate(cur);</span><br><span class="line">		&#125;</span><br><span class="line">		return cur;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* 删除掉根结点尾cur的树中最小结点并返回删除后二叉树的根结点 *&#x2F;</span><br><span class="line">	_node *rm_min(_node *cur)</span><br><span class="line">	&#123;</span><br><span class="line">		if (cur-&gt;_l &#x3D;&#x3D; nullptr) &#123;</span><br><span class="line">			_node *_r &#x3D; cur-&gt;_r;</span><br><span class="line">			delete cur;</span><br><span class="line">			_size--;</span><br><span class="line">			return _r;</span><br><span class="line">		&#125;</span><br><span class="line">		cur-&gt;_l &#x3D; rm_min(cur-&gt;_l);</span><br><span class="line">		return cur;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;* 删除指定的_node结点，删除之后做旋转操作然后递归向上的把父节点做旋转操作 *&#x2F;</span><br><span class="line">	_node *rm(_node *cur, K _key)</span><br><span class="line">	&#123;</span><br><span class="line">		if (cur &#x3D;&#x3D; nullptr)</span><br><span class="line">			return nullptr;</span><br><span class="line">		if (cur-&gt;_key &lt; _key) &#123;</span><br><span class="line">			cur-&gt;_r &#x3D; rm(cur-&gt;_r, _key);</span><br><span class="line">			return cur;</span><br><span class="line">		&#125;</span><br><span class="line">		else if (cur-&gt;_key &gt; _key) &#123;</span><br><span class="line">			cur-&gt;_l &#x3D; rm(cur-&gt;_l, _key);</span><br><span class="line">			return cur;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123; &#x2F;&#x2F; cur-&gt;_key &#x3D;&#x3D; _key</span><br><span class="line">			&#x2F;&#x2F; 左子树为空情况，删除cur并返回cur-&gt;_r</span><br><span class="line">			if (cur-&gt;_l &#x3D;&#x3D; nullptr) &#123;</span><br><span class="line">					_node *_r &#x3D; cur-&gt;_r;</span><br><span class="line">					delete cur;</span><br><span class="line">					_size--;</span><br><span class="line">					return _r;</span><br><span class="line">			&#125;</span><br><span class="line">					&#x2F;&#x2F; 右子树为空情况</span><br><span class="line">			else if (cur-&gt;_r &#x3D;&#x3D; nullptr) &#123;</span><br><span class="line">					_node *_l &#x3D; cur-&gt;_l;</span><br><span class="line">					delete cur;</span><br><span class="line">					_size--;</span><br><span class="line">					return _l;</span><br><span class="line">			&#125;</span><br><span class="line">			&#x2F;* 左右子树都不为空的情况 cur-&gt;_l !&#x3D; nullptr &amp;&amp; cur-&gt;_r !&#x3D; nullptr</span><br><span class="line">				* 找到比cur大的最小结点，即cur右子树的最小结点并用这个最小结点顶替cur的位置</span><br><span class="line">				* *&#x2F;</span><br><span class="line">			_node *successor &#x3D; _min_node(cur-&gt;_r);</span><br><span class="line">			successor-&gt;_r &#x3D; rm_min(cur-&gt;_r);</span><br><span class="line">			successor-&gt;_l &#x3D; cur-&gt;_l;</span><br><span class="line">			delete cur;</span><br><span class="line">			return successor;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" data-id="ck88pfut30009gkth2oh36nfp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-归并排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2020-03-26T11:49:17.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">归并排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="归并排序算法"><a href="#归并排序算法" class="headerlink" title="归并排序算法"></a>归并排序算法</h1><h2 id="未优化的基本代码实现"><a href="#未优化的基本代码实现" class="headerlink" title="未优化的基本代码实现"></a>未优化的基本代码实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">void merge(T arr[], int lo, int mi, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    int *tmparr &#x3D; new int[hi-lo+1];</span><br><span class="line">    for (k &#x3D; lo; k &lt;&#x3D; hi; ++k)</span><br><span class="line">        tmparr[tmpidx] &#x3D; arr[k];</span><br><span class="line">    for (i &#x3D; lo, j &#x3D; mi+1, k &#x3D; lo; i &lt;&#x3D; mid &amp;&amp; j &lt;&#x3D; hi; ++k) &#123;</span><br><span class="line">        if (tmparr[i-l] &lt; tmparr[j-l]) &#123;</span><br><span class="line">            arr[k] &#x3D; tmparr[i-lo];</span><br><span class="line">			++i;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">            arr[k] &#x3D; tmparr[j-lo];</span><br><span class="line">			++k;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    while (i &lt;&#x3D; mi) &#123; arr[k++] &#x3D; tmparr[i-lo]; ++i; &#125;</span><br><span class="line">    while (j &lt;&#x3D; hi) &#123; arr[k++] &#x3D; tmparr[j-lo]; ++j; &#125;</span><br><span class="line">    delete[] tmparr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void merge_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    mi &#x3D; (lo&gt;&gt;1)+(hi&gt;&gt;1);</span><br><span class="line">    merge_sort(arr, lo, mi);</span><br><span class="line">    merge_sort(arr, mi+1, hi);</span><br><span class="line">    merge(arr, lo, mi, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void merge_sort(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    merge_sort(arr, 0, n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="归并排序代码优化"><a href="#归并排序代码优化" class="headerlink" title="归并排序代码优化"></a>归并排序代码优化</h2><ol>
+<li>几乎有序的情况<br>近乎有序的情况下，归并排序算法效率要差于插入排序算法。原因在于该情况下插排时间复杂度接近O(n)，而归并为O(nlogn)。<br>优化思路是既然归并排序的两个部分arr[lo, mi], arr[mi+1, hi]都是有序的，那么只要符合条件 <strong>arr[mi]&gt;arr[mi+1]</strong> 再进行排序就可以避免不必要的merge操作。于是有了如下改进代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void merge_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    mi &#x3D; (lo&gt;&gt;1)+(hi&gt;&gt;1);</span><br><span class="line">    merge_sort(arr, lo, mi);</span><br><span class="line">    merge_sort(arr, mi+1, hi);</span><br><span class="line">    if (arr[mi] &gt; arr[mi+1])</span><br><span class="line">        merge(arr, lo, mi, hi);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>arr元素个数很小的情况<br>在元素很小的情况下，任何排序算法都不如插排，所以在元素个数很小的情况下，转为插入排序算法。假设元素个数&lt;=16的情况属于元素个数很小的情况。于是改进代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void insertion_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    for (i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">        T e &#x3D; arr[i];</span><br><span class="line">        for (j &#x3D; i; j &gt; 0 &amp;&amp; arr[j-1] &gt; e; --j)</span><br><span class="line">            arr[j] &#x3D; arr[j-1];</span><br><span class="line">        arr[j] &#x3D; e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void merge_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    mi &#x3D; (lo&gt;&gt;1)+(hi&gt;&gt;1);</span><br><span class="line">    merge_sort(arr, lo, mi);</span><br><span class="line">    merge_sort(arr, mi+1, hi);</span><br><span class="line">	if (arr[mi] &gt; arr[mi+1])</span><br><span class="line">    	merge(arr, lo, mi, hi);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+到此为止，比较关于归并排序最常用的优化方法已经介绍完毕。</li>
+</ol>
+<hr>
+<h2 id="归并排序的迭代实现"><a href="#归并排序的迭代实现" class="headerlink" title="归并排序的迭代实现"></a>归并排序的迭代实现</h2><p> <strong>根据统计迭代实现的归并排序效率略低于递归排序</strong><br>下面给出未进行优化的迭代归并排序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void merge_sort_iter(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    for (int sz &#x3D; 1; sz &lt;&#x3D; n; sz &lt;&lt;&#x3D; 1) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i+sz &lt; n; i +&#x3D; sz+sz)</span><br><span class="line">            &#x2F;&#x2F; 对 arr[i, i+sz-1] 和 arr[i+sz, i+2*sz-1] 进行归并</span><br><span class="line">            &#x2F;&#x2F; min(i+sz+sz-1, n-1)来确定数组边界，防止越界</span><br><span class="line">            merge(arr, i, i+sz-1, min(i+sz+sz-1, n-1));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" data-id="ck88pfut3000agkthe2w50cv1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-快速排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2020-03-26T11:47:50.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">快速排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="快速排序QuickSort"><a href="#快速排序QuickSort" class="headerlink" title="快速排序QuickSort"></a>快速排序QuickSort</h1><h2 id="未优化的快速排序实现"><a href="#未优化的快速排序实现" class="headerlink" title="未优化的快速排序实现"></a>未优化的快速排序实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line"></span><br><span class="line">    int j &#x3D; lo;</span><br><span class="line">    for (int i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">        if (arr[i] &lt; pivot_e)</span><br><span class="line">            swap(arr[++j], arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr[lo], arr[j]);</span><br><span class="line">    return j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition(arr, lo, hi);</span><br><span class="line">    QuickSort(arr, lo, pivot-1);</span><br><span class="line">    QuickSort(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    QuickSort(arr, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 400.672 s</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="复杂度："><a href="#复杂度：" class="headerlink" title="复杂度："></a>复杂度：</h2><ol>
+<li>时间复杂度：O(nlogn)</li>
+<li>空间复杂度：O(1)</li>
+</ol>
+<hr>
+<h2 id="未优化的快速排序算法有什么问题？"><a href="#未优化的快速排序算法有什么问题？" class="headerlink" title="未优化的快速排序算法有什么问题？"></a>未优化的快速排序算法有什么问题？</h2><h3 id="1-数组元素较少的情况"><a href="#1-数组元素较少的情况" class="headerlink" title="1. 数组元素较少的情况"></a>1. 数组元素较少的情况</h3><h4 id="解决方案：同归并排序的解决方案，直接转插排"><a href="#解决方案：同归并排序的解决方案，直接转插排" class="headerlink" title="解决方案：同归并排序的解决方案，直接转插排"></a>解决方案：同归并排序的解决方案，直接转插排</h4><h3 id="2-近乎有序的数组-——-pivot的选择"><a href="#2-近乎有序的数组-——-pivot的选择" class="headerlink" title="2. 近乎有序的数组 —— pivot的选择"></a>2. 近乎有序的数组 —— pivot的选择</h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>partition中pivot默认是lo，pivot_e默认是arr[lo]，对于近乎有序的数组会发生退化到O(n^2)。<br>性能测试中对于n=10000,优化后的MergeSort=0.2s，而QuickSort=51s。<br>其原因在于<strong>归并排序每次分割出来的数组左右都是平均一样大小的</strong>，而<strong>快速排序是不平均的</strong>。<br>在近乎有序的数组中快速排序总是分为两个长度分别为<strong>1</strong>和<strong>n-1</strong>的数组，又递归地对n-1数组进行排序，而n-1的数组又分为<strong>1</strong>和<strong>n-2</strong>的两个数组…  </p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>使用随机的pivot，经过数学证明随机的pivot在概率期望的时间复杂度为O(nlogn)。原因是：长度为n的数组，只有1/n的概率pivot=lo，接着又在n-1的数组中只有1/(n-1)的概率pivot=lo，… 也就是说，命中O(n^2)的概率p = n(n-1)(n-2)….1，如果是元素较多的数组中概率p接近于0。而对于普通的随机数组，只是略微变慢但效率保持在一个数量级。</p>
+<h4 id="改进方案的代码"><a href="#改进方案的代码" class="headerlink" title="改进方案的代码"></a>改进方案的代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition2(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	&#x2F;&#x2F; 优化2：随机选择pivot</span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line"></span><br><span class="line">    int j &#x3D; lo;</span><br><span class="line">    for (int i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">        if (arr[i] &lt; pivot_e)</span><br><span class="line">            std::swap(arr[++j], arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr[lo], arr[j]);</span><br><span class="line">    return j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;	&#x2F;&#x2F; 优化1：元素较少时转插排</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition2(arr, lo, hi);</span><br><span class="line">    QuickSort2(arr, lo, pivot-1);</span><br><span class="line">    QuickSort2(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    srand(time(NULL));</span><br><span class="line">    QuickSort2(arr, 0, n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-大量重复元素的数组-——-二路快速排序法"><a href="#3-大量重复元素的数组-——-二路快速排序法" class="headerlink" title="3. 大量重复元素的数组 —— 二路快速排序法"></a>3. 大量重复元素的数组 —— 二路快速排序法</h3><h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4><p>关注这一段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (int i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">    if (arr[i] &lt; pivot_e)</span><br><span class="line">        std::swap(arr[++j], arr[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这一段代码是遍历arr全部元素，如果比pivot_e小，则放在未来的pivot的左边，比pivot_e<strong>大或等于</strong>pivot，则放在未来的pivot的右边。<br>而问题就在于<strong>等于</strong>又一次导致了<strong>pivot划分两个数组元素不平均</strong>的问题。<br>考虑两种情况：  </p>
+<ol>
+<li>大量值为v的重复元素比pivot_e小/大 ==&gt; 大量值为v的元素落在pivot分割数组的左边/右边</li>
+<li>大量值为v的重复元素和pivot_e相等 ==&gt; 大量值为v的元素落在pivot分割数组的右边<br>所以不论怎么样，因为大量的重复元素一定会导致数组变得失衡（除非有成对的且基本一样多的值为v1,v2的元素正好落在pivot的两侧）。  <h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4>二路排序法通过<strong>雨露均沾</strong>的想法，左侧可以有一定机会获得和pivot_e相等的元素，右侧也可以有一定机会获得和pivot_e相等的元素，这样就可以保证每次通过pivot分割出来的两个数组元素数量尽可能接近，不会有非常失衡的情况出现。最后pivot就区分出了两个分区，arr[lo, pivot-1] &lt;= pivot_e 和 arr[pivot+1, hi] &gt;= pivot_e。<br>接下来给出这个代码的两种版本，一种是严蔚敏老师的，一种是bobo老师的，严版的代码更简洁漂亮，整体效率更好，而bobo老师的简单易懂。  <h4 id="改进方案的代码-1"><a href="#改进方案的代码-1" class="headerlink" title="改进方案的代码"></a>改进方案的代码</h4>严：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    while (lo &lt; hi) &#123;</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[hi] &gt;&#x3D; pivot_e) --hi;</span><br><span class="line">        arr[lo] &#x3D; arr[hi];</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[lo] &lt;&#x3D; pivot_e) ++lo;</span><br><span class="line">        arr[hi] &#x3D; arr[lo];</span><br><span class="line">    &#125;</span><br><span class="line">    arr[lo] &#x3D; pivot_e;</span><br><span class="line">    return lo;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">    int pivot &#x3D; partition2Ways(arr, lo, hi);</span><br><span class="line">    </span><br><span class="line">    QuickSort2Ways(arr, lo, pivot-1);</span><br><span class="line">    QuickSort2Ways(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 257.516 s</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">Quick Sort: 125.25 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0,10]</span><br><span class="line">^C (包含大量重复元素的测试数据，跑了差不多2小时但没有结果)</span><br><span class="line"></span><br><span class="line">未加随机pivot优化的严版快速二路排序算法：</span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 225.75 s</span><br></pre></td></tr></table></figure>
+bobo:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    std::swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line"></span><br><span class="line">    int i &#x3D; lo+1, j &#x3D; hi;</span><br><span class="line">    while (true) &#123;</span><br><span class="line">        while (i &lt;&#x3D; hi &amp;&amp; arr[i] &lt; pivot_e) ++i;</span><br><span class="line">        while (j &gt;&#x3D; lo+1 &amp;&amp; arr[j] &gt; pivot_e) --j;</span><br><span class="line">        if (i &gt; j) break;</span><br><span class="line">        std::swap(arr[i++], arr[j--]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2Ways(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">    int pivot &#x3D; partition2(arr, lo, hi);</span><br><span class="line">    QuickSort2Ways(arr, lo, pivot-1);</span><br><span class="line">    QuickSort2Ways(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort2Ways(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    srand(time(nullptr));</span><br><span class="line">    QuickSort2Ways(arr, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 419.562 s</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">Quick Sort: 305.734 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 999999, random range [0,10]</span><br><span class="line">Quick Sort: 105.688 s （包含大量重复元素的测试数据，只有100万个测试元素）</span><br></pre></td></tr></table></figure>
+<h3 id="3-更好的大量重复元素的解决方案-——-三路快速排序法"><a href="#3-更好的大量重复元素的解决方案-——-三路快速排序法" class="headerlink" title="3. 更好的大量重复元素的解决方案 —— 三路快速排序法"></a>3. 更好的大量重复元素的解决方案 —— 三路快速排序法</h3><h4 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h4>从二路快速排序算法的测试结果中可以看出，在面对大量重复元素的10亿个左右的测试数据下，使用了2个小时仍然无法有正确的排序返回结果。而在100万个包含大量重复元素的测试数据情况下，也需要和10亿个完全随机元素差不多的时间才能有正确结果。<br>当面对大量重复元素的时候，二路快速排序法虽然好，但是需要多次对pivot分割出来的含有重复且相等的元素的两个数组arr[lo, pivot-1] &lt;= pivot_e 和 arr[pivot+1, hi] &gt;= pivot_e进行递归快排,有没有什么办法一下子可以把所有重复的元素剔除出来以减少两个数组的大小和递归的次数呢？<h4 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h4>当面对大量重复元素的时候，二路快速排序法选择分为两个区间，arr[lo, pivot-1] &lt;= pivot_e 和 arr[pivot+1, hi] &gt;= pivot_e。<br>而三路快速排序法选择分为三个区间：arr[lo, pivot_left-1] &lt; pivot_e , arr[pivot_left, pivot_right] == pivot_e , arr[pivot_right+1, hi] &gt; pivot_e。<br>通过这种方法就剔除出所有等于pivot_e的元素，减少了递归的次数。<br>注：对于以下提供的程序代码来说，三个区间分别是arr[lo, lt-1] &lt; pivot_e , arr[lt, gt-1] == pivot_e , arr[gt, hi] &gt; pivot_e。如果有疑惑可以看bobo老师视频演示动画。  <h4 id="改进方案的代码-2"><a href="#改进方案的代码-2" class="headerlink" title="改进方案的代码"></a>改进方案的代码</h4>自己写的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways2(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">        insertionSort(arr, lo, hi);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    int lt &#x3D; lo, i &#x3D; lo+1, gt &#x3D; hi+1;</span><br><span class="line">    while (i &lt; gt) &#123;</span><br><span class="line">        while (i &lt; gt &amp;&amp; arr[i] &lt; pivot_e) swap(arr[i++], arr[++lt]);</span><br><span class="line">        while (i &lt; gt &amp;&amp; arr[i] &gt; pivot_e) swap(arr[i], arr[--gt]);</span><br><span class="line">        while (i &lt; gt &amp;&amp; arr[i] &#x3D;&#x3D; pivot_e) ++i;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(arr[lo], arr[lt]);</span><br><span class="line">    QuickSort3Ways2(arr, lo, lt-1);</span><br><span class="line">    QuickSort3Ways2(arr, gt, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways2(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    srand(time(nullptr));</span><br><span class="line">    QuickSort3Ways2(arr, 0, n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+bobo版：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways1(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">        insertionSort(arr, lo, hi);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    swap(arr[lo], arr[rand()%(hi-lo+1)+lo]);</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    int lt &#x3D; lo; &#x2F;&#x2F; 排序过程中lt 指向最后一个 &lt; pivot_e的元素</span><br><span class="line">    int gt &#x3D; hi+1; &#x2F;&#x2F; gt 指向第一个 &gt; pivot_e的元素</span><br><span class="line">    int i &#x3D; lo+1; &#x2F;&#x2F; i 指向将要与 pivot_e比较的元素</span><br><span class="line">    while (i &lt; gt) &#123;</span><br><span class="line">        if (arr[i] &lt; pivot_e)</span><br><span class="line">            swap(arr[i++], arr[++lt]);</span><br><span class="line">        else if (arr[i] &gt; pivot_e)</span><br><span class="line">            swap(arr[i], arr[--gt]);</span><br><span class="line">        else</span><br><span class="line">            ++i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    swap(arr[lo], arr[lt]); &#x2F;&#x2F; 排好序lt 指向第一个 &#x3D;&#x3D; pivot_e的元素</span><br><span class="line">    QuickSort3Ways1(arr, lo, lt-1);</span><br><span class="line">    QuickSort3Ways1(arr, gt, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort3Ways1(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">	srand(time(nullptr));</span><br><span class="line">    QuickSort3Ways1(arr, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 527.094 s (完全随机元素速度在10亿量级减慢了100s左右，完全可以接受)</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">Quick Sort: 442.156 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0,10]</span><br><span class="line">Quick Sort: 46.9531 s (太强了，对于大量重复元素的情况提升巨大)</span><br></pre></td></tr></table></figure>
+这里附上两个版本的测试对比：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Test for random array, size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">QuickSort3Ways1 : 143.312 s</span><br><span class="line">QuickSort3Ways2: 138.672 s</span><br><span class="line"></span><br><span class="line">Test for nearly ordered array, size &#x3D; 1073741823, swap time &#x3D; 100</span><br><span class="line">QuickSort3Ways1: : 51.5312 s</span><br><span class="line">QuickSort3Ways2: 45.8594 s</span><br><span class="line"></span><br><span class="line">Test for random array, size &#x3D; 1073741823, random range [0,10]</span><br><span class="line">QuickSort3Ways1: : 16.2188 s</span><br><span class="line">QuickSort3Ways2: 15.3281 s</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h2 id="小记：我的错误优化"><a href="#小记：我的错误优化" class="headerlink" title="小记：我的错误优化"></a>小记：我的错误优化</h2><p>未优化的严蔚敏版快速排序算法，这里我测试了两种，一种是标准代码，一种是我错误的优化代码，分别如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">int partition(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    T pivot_e &#x3D; arr[lo];</span><br><span class="line">    while (lo &lt; hi) &#123;</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[hi] &gt;&#x3D; pivot_e) --hi;</span><br><span class="line">        arr[lo] &#x3D; arr[hi];</span><br><span class="line">        while (lo &lt; hi &amp;&amp; arr[lo] &lt;&#x3D; pivot_e) ++lo;</span><br><span class="line">        arr[hi] &#x3D; arr[lo];</span><br><span class="line">    &#125;</span><br><span class="line">    arr[lo] &#x3D; pivot_e;</span><br><span class="line">    return lo;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">	    return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition(arr, lo, hi);</span><br><span class="line">    </span><br><span class="line">    QuickSort(arr, lo, pivot-1);</span><br><span class="line">    QuickSort(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 225.75 s</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void QuickSort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    int pivot &#x3D; partition(arr, lo, hi);</span><br><span class="line">    </span><br><span class="line">    if (lo &lt; pivot-1) QuickSort(arr, lo, pivot-1);</span><br><span class="line">    if (pivot+1 &lt; hi) QuickSort(arr, pivot+1, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test for random array size &#x3D; 1073741823, random range [0, 1073741823]</span><br><span class="line">Quick Sort: 231.484 s</span><br></pre></td></tr></table></figure>
+<p>我认为这个优化最主要的问题在于if语句，它减少了指令流水和编译器对代码的优化。应该要尽可能避免if语句而使用while,for循环语句，可以增加程序的并行性。<br>至少可以说明为了减少函数跳用而增加多余的if语句对代码执行速度没有显著提升，所以不要进行过早的或多余的优化，除非这个优化可以在复杂度上有显著提升。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" data-id="ck88pfut4000dgkthfbqu7epg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-单例模式-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/" class="article-date">
+  <time datetime="2020-03-26T11:47:18.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/">单例模式-2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="懒汉单例模式进阶-jvm指令重排优化埋下的隐患"><a href="#懒汉单例模式进阶-jvm指令重排优化埋下的隐患" class="headerlink" title="懒汉单例模式进阶 - jvm指令重排优化埋下的隐患"></a>懒汉单例模式进阶 - jvm指令重排优化埋下的隐患</h1><blockquote>
+<p>这个问题有一定概率会发生，但不容易复现，所以只能介绍下这个问题的原因和如何解决的。<br>首先还是给出上节线程安全且高效的懒汉单例模式实现：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            synchronized (LazySingleton.class) &#123;</span><br><span class="line">                if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">                    lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个隐患是在: if (lazySingleton == null) { lazySingleton = new LazyDoubleCheckSingleton(); }<br>隐患导致的问题:<br>lazySingleton在其他线程中正在创建，但是没有创建完毕，而此时lazySingleton != null;<br>导致了return lazySingleton;的对象可能是有残缺的对象。且其他的线程使用了这个残缺的对象。<br>至于为什么会未初始化完成对象，而lazySingleton != null，就是由于jvm的指令重排优化。下面来介绍它。   </p>
+<p>lazySingleton = new LazySingleton()所执行的所有操作（按正常指令顺序进行）：  </p>
+<ol>
+<li>分配内存给这个对象；</li>
+<li>初始化对象；</li>
+<li>设置lazySingleton指向刚分配的对象;</li>
+</ol>
+<p>这里第2步和第3步可能会被优化重排序，于是即变成了以下顺序：  </p>
+<ol>
+<li>分配内存给这个对象；</li>
+<li>设置lazySingleton指向刚分配的对象;<br>(这时lazySingleton != null但还没有完成初始化，而其他线程恰巧在这个时间点使用了这个lazySingleton。出现问题。)  </li>
+<li>初始化对象；<br>导致了lazySingleton != null 但是却还没有初始化完成的情况发生，也就解释了隐患1为什么会出现。<br>这个隐患是jvm优化指令重排而导致的问题。<br>解决方案有两种：  </li>
+<li>不允许2、3进行重排序，即是添加volatile关键字，该关键字保证了初始化对象和对象赋值给lazySingleton的顺序性;  </li>
+<li>允许2、3进行重排序，但不允许其他线程看到重排序，这又有两种实现方法：<ol>
+<li>全部加上synchronized关键字,但带来了效率问题</li>
+<li>接下来将要介绍的使用静态内部类的单例模式（同样也是懒汉模式）</li>
+</ol>
+</li>
+</ol>
+<h3 id="小扩展："><a href="#小扩展：" class="headerlink" title="小扩展："></a>小扩展：</h3><p>java语言规范保证intra-thread semantics原则，即单线程下指令重排不会改变单线程指令执行结果<br>所以2/3互换位置在单线程下是符合这一原则的。但多线程就会出现问题。<br>至于为什么jvm要做这个优化，我<strong>猜测</strong>应该是提前将对象赋给lazySingleton可以一边执行接下来的程序步骤，一边进行对象的初始化操作，有更高的并行度。  </p>
+<p>第一种解决方案 - 添加volatile关键字的版本 v0.4:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private volatile static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            synchronized (LazySingleton.class) &#123;</span><br><span class="line">                if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">                    lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="使用静态内部类实现的懒汉单例模式"><a href="#使用静态内部类实现的懒汉单例模式" class="headerlink" title="使用静态内部类实现的懒汉单例模式"></a>使用静态内部类实现的懒汉单例模式</h1><p>使用静态内部类实现的懒汉单例模式 v0.4:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class StaticInnerClassSingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static class InnerClass &#123;</span><br><span class="line">        private static StaticInnerClassSingleton staticInnerClassSingleton &#x3D; new StaticInnerClassSingleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static StaticInnerClassSingleton getInstance() &#123;</span><br><span class="line">        return InnerClass.staticInnerClassSingleton;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Singleton模式必须要有 private 的构造器，否则默认为default（也就是package权限），同一个包的外部类可以new出来</span><br><span class="line">    private StaticInnerClassSingleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该实现的优点如下：</p>
+<ol>
+<li>该Singleton对象是懒汉式的，且线程安全，效率好。</li>
+<li>假设某线程调用了未初始化的StaticInnerClassSingleton类，则类会因调用进行初始化，且在<strong>初始化时加载Class对象的初始化锁</strong>。就保证了多个线程的初始化线程安全。<br>其中第二点就是关键，因为初始化时加载Class对象的初始化锁而保证了线程安全，也避免了jvm指令重排导致的隐患。<br>而Class初始化又做了如下几个工作：</li>
+<li>分配对象的内存空间</li>
+<li>设置instance指向内存空间</li>
+<li>初始化对象<br>注意，这里jvm还是进行指令重排了，但因为锁的存在，对于外部来说是不可见的，也是不可访问的。保证了线程安全。</li>
+</ol>
+<h3 id="小扩展"><a href="#小扩展" class="headerlink" title="小扩展"></a>小扩展</h3><p>初始化一个类，包括这个类中的静态类或静态变量的初始化，主要有5种情况导致一个类 A 将被初始化； （注：这里类是泛指，也包含了接口）</p>
+<ol>
+<li>有一个 A 类型的实例被创建；</li>
+<li>A类中的一个静态方法被调用；</li>
+<li>A类中静态成员被赋值；</li>
+<li>A类中的静态成员被使用并且这个成员不是一个常量（const）成员；</li>
+<li>A类是个顶级类并且类A中有嵌套的断言语句，则会被立即初始化（不常用）</li>
+</ol>
+<h1 id="下节预告"><a href="#下节预告" class="headerlink" title="下节预告"></a>下节预告</h1><p>现在仍然不是完美的单例模式，但到这里已经非常不错了。<br>接下来要讨论如何保证序列化和反序列化所创建的对象相同，以及，如何避免反射攻击。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/" data-id="ck88pfut10006gkthgvdr0mwj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-单例模式-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-1/" class="article-date">
+  <time datetime="2020-03-26T11:46:40.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-1/">单例模式-1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>定义：保证一个类仅有一个实例，并提供一个全局访问点<br>类型：创建型<br>场景：想确保任何情况下都绝对只有一个实例，比如一个程序只有一个线程池等<br>优点：</p>
+<ul>
+<li>内存里只有一个实例，减少内存开销</li>
+<li>避免对资源多重占用</li>
+<li>设置全局访问点，严格控制访问<br>缺点：</li>
+<li>没有接口，扩展困难</li>
+</ul>
+<h2 id="要点："><a href="#要点：" class="headerlink" title="要点："></a>要点：</h2><ol>
+<li>私有的构造器</li>
+<li>线程安全 - 非常重要*</li>
+<li>是否延迟加载 - 是：懒汉式单例模式；否：饿汉式代理模式</li>
+<li>序列化和反序列化安全</li>
+<li>反射 - 了解如何防止反射攻击<br>其中：2/3两点是重点，4/5两点是难点。下面会逐步介绍。<br>本节只详细介绍2/3两个问题。</li>
+</ol>
+<h1 id="饿汉式单例模式"><a href="#饿汉式单例模式" class="headerlink" title="饿汉式单例模式"></a>饿汉式单例模式</h1><blockquote>
+<p>程序初始化时就创建单例模式。  </p>
+</blockquote>
+<ul>
+<li>优点：实现简单，由于程序初始化时就创建单例模式，所以不会带来线程安全问题，而懒汉式单例模式需要考虑线程安全</li>
+<li>缺点：资源可能被浪费，程序创建了该单例模式但从未被使用，可以被反射攻击，序列化/反序列化不安全</li>
+</ul>
+<p>最简单的版本v0.1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class HungrySingleton &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 创建方法1：</span><br><span class="line">    &#x2F;&#x2F; private final static HungrySingleton hungrySingleton &#x3D; new HungrySingleton();</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 创建方法2：</span><br><span class="line">    private final static HungrySingleton hungrySingleton;</span><br><span class="line">    static &#123;</span><br><span class="line">        hungrySingleton &#x3D; new HungrySingleton();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 构造器必须显式声明为是私有的，否则外部可以通过构造器创建多个HungrySingleton, 就不是单例模式了</span><br><span class="line">    private HungrySingleton() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public static HungrySingleton getInstance() &#123;</span><br><span class="line">        return hungrySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="懒汉式单例模式"><a href="#懒汉式单例模式" class="headerlink" title="懒汉式单例模式"></a>懒汉式单例模式</h1><blockquote>
+<p>确实要使用实例时才创建</p>
+</blockquote>
+<ul>
+<li>优点：资源不会被浪费</li>
+<li>缺点：实现复杂，需要考虑线程安全问题，会被反射攻击，序列化/反序列化不安全<br>最简单的版本v0.1<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+这个版本是线程不安全的，如果在未创建lazySingleton的前提条件下，有两个线程同时访问getInstance()。<br>两个线程同时进入了if判断并通过，则创建了两个lazySingleton。接下来看两个线程安全的基础版本：<br>线程安全的版本1 - v0.2.1:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 使用synchronized关键字保证线程安全</span><br><span class="line">    public synchronized static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+线程安全的版本2 - v0.2.2:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        synchronized (LazySingleton.class) &#123;</span><br><span class="line">            if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">                lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+v0.2.1 和 v0.2.2 基本是一样的，使用关键字synchronized保证多线程的唯一访问getInstance()。<br>这样就避免了创建多个lazySingleton的可能性。但是又会引入新的问题，即效率极差。<br>比如这样一个场景：lazySingleton已经创建好了，并且有无数多个线程要获取这个lazySingleton。<br>但是却因为synchronized关键字，每次只能有一个线程访问getInstance()，获取后下一个进程才能访问。<br>更不要说算上加锁、解锁的开销了。所以接下来我们要编写一个性能更好的版本，主要优化就是获取lazySingleton这个操作。  </li>
+</ul>
+<p>效率更好的线程安全版本 - v0.3:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            synchronized (LazySingleton.class) &#123;</span><br><span class="line">                if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">                    lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个版本常被称为双检查法，if语句不加锁进行判断，避免了锁的开销，效率就大大提升了。<br>如果lazySingleton尚未被创建，则再加锁进行判断和创建操作，又避免了多个进程同时进入的问题。<br>到此为止，线程安全的问题我们算是解决了，延迟加载的问题也算是解决了。<br>但是这个v0.3版本还存在一些非常可怕的隐患，准备下节介绍。<br>接下来会编写一些测试方法，来测试这些函数。然后在你们的IDEA中打断点，单步跟踪看看执行的流程吧。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><blockquote>
+<p>请针对线程不安全的、线程安全的版本，分别单步测试以上介绍的场景，会吸收得更好。<br>多线程创建和运行类ThreadT.java：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class ThreadT implements Runnable &#123;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        LazySingleton lazySingleton &#x3D; LazySingleton.getInstance(); &#x2F;&#x2F; 饿汉式改成HungrySingleton即可</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + &quot; &quot; + instance); &#x2F;&#x2F; 打印线程名字 和 实例的引用地址</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试函数类Test.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        &#x2F;&#x2F; 使用多线程debug来模拟线程不安全的情况</span><br><span class="line">        Thread t1 &#x3D; new Thread(new ThreadT());</span><br><span class="line">        Thread t2 &#x3D; new Thread(new ThreadT());</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本节测试也介绍完毕，请针对懒汉单例模式的不同的场景，线程安全性进行测试吧。<br>下面介绍jvm的指令重排执行优化带来的可怕隐患。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-1/" data-id="ck88pfut00005gkth414fcedb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/hello-world/" class="article-date">
+  <time datetime="2020-03-26T11:44:05.210Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/26/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/hello-world/" data-id="ck88pfusp0000gkth812r61ig" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>git | chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、开发分支（dev）上的代码达到上线的标准后，要合并到 master 分支 12345git checkout devgit pullgit checkout mastergit merge devgit push -u origin master 二、当master代码改动了，需要更新开发分支（dev）上的代码 12345git checkout mastergit pullgit check">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git">
+<meta property="og:url" content="https://cng3s.github.io/2020/03/26/git/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="一、开发分支（dev）上的代码达到上线的标准后，要合并到 master 分支 12345git checkout devgit pullgit checkout mastergit merge devgit push -u origin master 二、当master代码改动了，需要更新开发分支（dev）上的代码 12345git checkout mastergit pullgit check">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-26T11:59:17.000Z">
+<meta property="article:modified_time" content="2020-03-26T11:59:27.421Z">
+<meta property="article:author" content="chneg">
+<meta property="article:tag" content="软件">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/git/" class="article-date">
+  <time datetime="2020-03-26T11:59:17.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一、开发分支（dev）上的代码达到上线的标准后，要合并到 master 分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line">git pull</span><br><span class="line">git checkout master</span><br><span class="line">git merge dev</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>二、当master代码改动了，需要更新开发分支（dev）上的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git pull</span><br><span class="line">git checkout dev</span><br><span class="line">git merge master</span><br><span class="line">git push -u origin dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="Important-commands"><a href="#Important-commands" class="headerlink" title="Important commands"></a>Important commands</h1><ul>
+<li>git init # make a new repository  </li>
+<li>git clone # initialize a repository locally from a remote server  </li>
+<li>git status # MOST IMPORTANT COMMAND</li>
+<li>git log # show commit history. Can use –decorate –graph –all to make it pretty</li>
+<li>git add # stages files to be committed. Flags: –a, -u</li>
+<li>git commit -m # commit the changes in the staged files (use good messages!)</li>
+<li>git push # push changes to a remote server (–set-upstream origin branchname)</li>
+<li>git pull # pull changes from a server</li>
+<li>git branch # make a new branch</li>
+<li>git checkout # switch to a different branch. Can use -b to make a new branch</li>
+<li>git merge name # merge “name” branch into your current branch</li>
+<li>git reset HEAD # Used to unstage files</li>
+<li>git reset –hard + hash # Used to reset to an old commit (with a commit hash)</li>
+</ul>
+<h1 id="Configuring-git"><a href="#Configuring-git" class="headerlink" title="Configuring git"></a>Configuring git</h1><p>$ git config –global user.name “<Your Name>“<br>$ git config –global user.email “<Your Email>”<br>$ git config –global push.default simple<br>(Make sure the email is your Andrew ID, and make sure to add that email to your GitHub account!)</p>
+<h1 id="Committing-pushing-pulling"><a href="#Committing-pushing-pulling" class="headerlink" title="Committing, pushing, pulling"></a>Committing, pushing, pulling</h1><ol>
+<li>$ lswe have 4 files here </li>
+<li>$ git status # branch is up to date with the server, nothing to commit</li>
+<li>$ git log –graph –decorate –all<ul>
+<li>i.Shows a pretty graph of the commit history.</li>
+</ul>
+</li>
+<li>$ vim example.txt # lets make some changes to example.txt</li>
+<li>$ git status # now shows that we have unstaged files</li>
+<li>$ git add example.txt # stages the file to be committed</li>
+<li>$ git reset HEAD example.txt # unstages the file (to show you how to do that)</li>
+<li>$ git add example.txt # to restage the file</li>
+<li>$ git commit -m  “insert a relevant commit message here”</li>
+<li>$ git status # shows you are 1 commit ahead of “origin” = remote server</li>
+<li>$ git push # this updates the remote server</li>
+<li>$ git log –graph –decorate –all #  now we can see the new commit on top of all the old ones</li>
+</ol>
+<h1 id="Merging"><a href="#Merging" class="headerlink" title="Merging"></a>Merging</h1><ol>
+<li>$ git log –graph –decorate –all # note the other branch “realistic ending” that branches away from master</li>
+<li>$ git checkout realistic_ending switch to the other branch</li>
+<li>$ git branch shows all of our branches</li>
+<li>$ ls note that there are different files here</li>
+<li>vim example.txt # we can see the story is different than in the master branch-finish it!</li>
+<li>Add and commit the file, push to the server.</li>
+<li>$ git checkout master # switch back to the master branch</li>
+<li>$ git merge realistic_ending # will attempt to merge the two branches, but there’s a conflict<ol>
+<li>a.$ git statusshows that the conflict is in example.txt</li>
+<li>b.$ vim example.txt fix the story</li>
+<li>c.$ git add example.txt</li>
+<li>d.$ git commit -m “appropriate message for a merge” now the merge is complete</li>
+</ol>
+</li>
+<li>$ git log – decorate –graph –all # shows that now you still have 2 branches, but they’ve been merged and point to the same files</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/git/" data-id="ck88pfusz0004gkthhqk7743f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/26/nginx/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">nginx</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

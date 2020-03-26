@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>单例模式-2 | chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="懒汉单例模式进阶 - jvm指令重排优化埋下的隐患 这个问题有一定概率会发生，但不容易复现，所以只能介绍下这个问题的原因和如何解决的。首先还是给出上节线程安全且高效的懒汉单例模式实现：  123456789101112131415public class LazySingleton &amp;#123;    private static LazySingleton lazySingleton &amp;#x3D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式-2">
+<meta property="og:url" content="https://cng3s.github.io/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="懒汉单例模式进阶 - jvm指令重排优化埋下的隐患 这个问题有一定概率会发生，但不容易复现，所以只能介绍下这个问题的原因和如何解决的。首先还是给出上节线程安全且高效的懒汉单例模式实现：  123456789101112131415public class LazySingleton &amp;#123;    private static LazySingleton lazySingleton &amp;#x3D">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-26T11:47:18.000Z">
+<meta property="article:modified_time" content="2020-03-26T11:47:38.242Z">
+<meta property="article:author" content="chneg">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-单例模式-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/" class="article-date">
+  <time datetime="2020-03-26T11:47:18.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      单例模式-2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="懒汉单例模式进阶-jvm指令重排优化埋下的隐患"><a href="#懒汉单例模式进阶-jvm指令重排优化埋下的隐患" class="headerlink" title="懒汉单例模式进阶 - jvm指令重排优化埋下的隐患"></a>懒汉单例模式进阶 - jvm指令重排优化埋下的隐患</h1><blockquote>
+<p>这个问题有一定概率会发生，但不容易复现，所以只能介绍下这个问题的原因和如何解决的。<br>首先还是给出上节线程安全且高效的懒汉单例模式实现：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            synchronized (LazySingleton.class) &#123;</span><br><span class="line">                if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">                    lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个隐患是在: if (lazySingleton == null) { lazySingleton = new LazyDoubleCheckSingleton(); }<br>隐患导致的问题:<br>lazySingleton在其他线程中正在创建，但是没有创建完毕，而此时lazySingleton != null;<br>导致了return lazySingleton;的对象可能是有残缺的对象。且其他的线程使用了这个残缺的对象。<br>至于为什么会未初始化完成对象，而lazySingleton != null，就是由于jvm的指令重排优化。下面来介绍它。   </p>
+<p>lazySingleton = new LazySingleton()所执行的所有操作（按正常指令顺序进行）：  </p>
+<ol>
+<li>分配内存给这个对象；</li>
+<li>初始化对象；</li>
+<li>设置lazySingleton指向刚分配的对象;</li>
+</ol>
+<p>这里第2步和第3步可能会被优化重排序，于是即变成了以下顺序：  </p>
+<ol>
+<li>分配内存给这个对象；</li>
+<li>设置lazySingleton指向刚分配的对象;<br>(这时lazySingleton != null但还没有完成初始化，而其他线程恰巧在这个时间点使用了这个lazySingleton。出现问题。)  </li>
+<li>初始化对象；<br>导致了lazySingleton != null 但是却还没有初始化完成的情况发生，也就解释了隐患1为什么会出现。<br>这个隐患是jvm优化指令重排而导致的问题。<br>解决方案有两种：  </li>
+<li>不允许2、3进行重排序，即是添加volatile关键字，该关键字保证了初始化对象和对象赋值给lazySingleton的顺序性;  </li>
+<li>允许2、3进行重排序，但不允许其他线程看到重排序，这又有两种实现方法：<ol>
+<li>全部加上synchronized关键字,但带来了效率问题</li>
+<li>接下来将要介绍的使用静态内部类的单例模式（同样也是懒汉模式）</li>
+</ol>
+</li>
+</ol>
+<h3 id="小扩展："><a href="#小扩展：" class="headerlink" title="小扩展："></a>小扩展：</h3><p>java语言规范保证intra-thread semantics原则，即单线程下指令重排不会改变单线程指令执行结果<br>所以2/3互换位置在单线程下是符合这一原则的。但多线程就会出现问题。<br>至于为什么jvm要做这个优化，我<strong>猜测</strong>应该是提前将对象赋给lazySingleton可以一边执行接下来的程序步骤，一边进行对象的初始化操作，有更高的并行度。  </p>
+<p>第一种解决方案 - 添加volatile关键字的版本 v0.4:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class LazySingleton &#123;</span><br><span class="line"></span><br><span class="line">    private volatile static LazySingleton lazySingleton &#x3D; null;</span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;</span><br><span class="line">        if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">            synchronized (LazySingleton.class) &#123;</span><br><span class="line">                if (lazySingleton &#x3D;&#x3D; null) &#123;</span><br><span class="line">                    lazySingleton &#x3D; new LazySingleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return lazySingleton;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="使用静态内部类实现的懒汉单例模式"><a href="#使用静态内部类实现的懒汉单例模式" class="headerlink" title="使用静态内部类实现的懒汉单例模式"></a>使用静态内部类实现的懒汉单例模式</h1><p>使用静态内部类实现的懒汉单例模式 v0.4:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class StaticInnerClassSingleton &#123;</span><br><span class="line"></span><br><span class="line">    private static class InnerClass &#123;</span><br><span class="line">        private static StaticInnerClassSingleton staticInnerClassSingleton &#x3D; new StaticInnerClassSingleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static StaticInnerClassSingleton getInstance() &#123;</span><br><span class="line">        return InnerClass.staticInnerClassSingleton;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Singleton模式必须要有 private 的构造器，否则默认为default（也就是package权限），同一个包的外部类可以new出来</span><br><span class="line">    private StaticInnerClassSingleton() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该实现的优点如下：</p>
+<ol>
+<li>该Singleton对象是懒汉式的，且线程安全，效率好。</li>
+<li>假设某线程调用了未初始化的StaticInnerClassSingleton类，则类会因调用进行初始化，且在<strong>初始化时加载Class对象的初始化锁</strong>。就保证了多个线程的初始化线程安全。<br>其中第二点就是关键，因为初始化时加载Class对象的初始化锁而保证了线程安全，也避免了jvm指令重排导致的隐患。<br>而Class初始化又做了如下几个工作：</li>
+<li>分配对象的内存空间</li>
+<li>设置instance指向内存空间</li>
+<li>初始化对象<br>注意，这里jvm还是进行指令重排了，但因为锁的存在，对于外部来说是不可见的，也是不可访问的。保证了线程安全。</li>
+</ol>
+<h3 id="小扩展"><a href="#小扩展" class="headerlink" title="小扩展"></a>小扩展</h3><p>初始化一个类，包括这个类中的静态类或静态变量的初始化，主要有5种情况导致一个类 A 将被初始化； （注：这里类是泛指，也包含了接口）</p>
+<ol>
+<li>有一个 A 类型的实例被创建；</li>
+<li>A类中的一个静态方法被调用；</li>
+<li>A类中静态成员被赋值；</li>
+<li>A类中的静态成员被使用并且这个成员不是一个常量（const）成员；</li>
+<li>A类是个顶级类并且类A中有嵌套的断言语句，则会被立即初始化（不常用）</li>
+</ol>
+<h1 id="下节预告"><a href="#下节预告" class="headerlink" title="下节预告"></a>下节预告</h1><p>现在仍然不是完美的单例模式，但到这里已经非常不错了。<br>接下来要讨论如何保证序列化和反序列化所创建的对象相同，以及，如何避免反射攻击。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-2/" data-id="ck88pfut10006gkthgvdr0mwj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          快速排序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/26/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">单例模式-1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

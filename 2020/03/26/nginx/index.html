@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>nginx | chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Nginx配置反向代理的一些坑 目标：做一个一机多tomcat模拟集群，使用nginx做反向代理到本机不同的端口上 反向代理的网址配置：abc11.com具体步骤   将多个tomcat程序拷贝到文件夹并配置环境变量，配置tomcat集群有以下几个要点： 修改server.xml文件，把端口区分开来（如：tomcat1是8080，tomcat2就不能是8080了） 将不同的tomcat环境变量区分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx">
+<meta property="og:url" content="https://cng3s.github.io/2020/03/26/nginx/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="Nginx配置反向代理的一些坑 目标：做一个一机多tomcat模拟集群，使用nginx做反向代理到本机不同的端口上 反向代理的网址配置：abc11.com具体步骤   将多个tomcat程序拷贝到文件夹并配置环境变量，配置tomcat集群有以下几个要点： 修改server.xml文件，把端口区分开来（如：tomcat1是8080，tomcat2就不能是8080了） 将不同的tomcat环境变量区分">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-26T11:58:10.000Z">
+<meta property="article:modified_time" content="2020-03-26T11:58:44.035Z">
+<meta property="article:author" content="chneg">
+<meta property="article:tag" content="软件">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/nginx/" class="article-date">
+  <time datetime="2020-03-26T11:58:10.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      nginx
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Nginx配置反向代理的一些坑"><a href="#Nginx配置反向代理的一些坑" class="headerlink" title="Nginx配置反向代理的一些坑"></a>Nginx配置反向代理的一些坑</h1><ul>
+<li>目标：做一个一机多tomcat模拟集群，使用nginx做反向代理到本机不同的端口上</li>
+<li>反向代理的网址配置：abc11.com<h2 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h2></li>
+</ul>
+<ol>
+<li>将多个tomcat程序拷贝到文件夹并配置环境变量，配置tomcat集群有以下几个要点：<ol>
+<li>修改server.xml文件，把端口区分开来（如：tomcat1是8080，tomcat2就不能是8080了）</li>
+<li>将不同的tomcat环境变量区分开来<ul>
+<li>linux 在/etc/profile，windows在高级系统设置中</li>
+<li>添加不同名字的环境变量<ul>
+<li>windows：将CATALINA_HOME 和 CATALINA_BASE 改成对应的环境变量</li>
+<li>linux: linux中直接在catalina.sh中将CATALINA_BASE，CATALINA_HOME赋值成你的环境变量</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>使用nginx反向代理<ol>
+<li>nginx.conf中配置  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">	worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">	include       mime.types;</span><br><span class="line">	default_type  application&#x2F;octet-stream;</span><br><span class="line">	sendfile        on;</span><br><span class="line">	keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen       80;</span><br><span class="line">		server_name  localhost;</span><br><span class="line">		location &#x2F; &#123;</span><br><span class="line">			root   html;</span><br><span class="line">			index  index.html index.htm;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	# 我们将要反向代理的配置文件放在vhost&#x2F;下</span><br><span class="line">	# 这样做的好处就是目录结构清晰，nginx配置文件和反向代理配置文件分离</span><br><span class="line">	include vhost&#x2F;*.conf; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>vhost中的配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">upstream www.imooc11.com &#123;</span><br><span class="line">	server 127.0.0.1:8080;</span><br><span class="line">	server 127.0.0.1:9080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	autoindex on;</span><br><span class="line">	server_name www.imooc11.com imooc11.com;</span><br><span class="line">	#access_log &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;access.log combined;</span><br><span class="line">	index index.html index.htm index.jsp index.php;</span><br><span class="line">	if ( $query_string ~* &quot;.*[\;&#39;\&lt;\&gt;].*&quot; )&#123;</span><br><span class="line">			return 404;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location &#x2F; &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com&#x2F;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|ico)$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 30d;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(js|css)?$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 7d;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+注意这里的坑是最大的，文件目录千万不可以写错。<br>如果写错了，日志不会提醒你，而且反向代理不会成功，我搞了几个小时才在linux服务器下发现问题。<br>然后把windows下的nginx改成功了。<br>下面是我之前的错误配置文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">upstream www.imooc11.com &#123;</span><br><span class="line">	server 127.0.0.1:8080;</span><br><span class="line">	server 127.0.0.1:9080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	autoindex on;</span><br><span class="line">	server_name www.imooc11.com imooc11.com;</span><br><span class="line"></span><br><span class="line">	# 这里错误，windows下没有这样的目录</span><br><span class="line">	access_log &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;access.log combined;</span><br><span class="line">	index index.html index.htm index.jsp index.php;</span><br><span class="line">	if ( $query_string ~* &quot;.*[\;&#39;\&lt;\&gt;].*&quot; )&#123;</span><br><span class="line">		return 404;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location &#x3D; &#x2F; &#123;</span><br><span class="line">		# 这里错误，没有这样的目录</span><br><span class="line">		root &#x2F;product&#x2F;dist&#x2F;view;</span><br><span class="line">		index index.html;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.html$ &#123;</span><br><span class="line">		# 这里错误</span><br><span class="line">		root &#x2F;product&#x2F;front&#x2F;mmall_fe&#x2F;dist&#x2F;view;</span><br><span class="line">		index index.html;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location &#x2F; &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com&#x2F;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|ico)$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 30d;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	location ~ .*\.(js|css)?$ &#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;www.imooc11.com;</span><br><span class="line">		expires 7d;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+所以还是要把别人的配置文件想清楚再用，没日志记录是最糟糕的。<br>希望以后不要再碰到这种。。。。。</li>
+<li>修改host文件<ul>
+<li>windows: Windows/System32/driver/etc/hosts中添加</li>
+<li>linux: /etc/hosts中添加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 www.imooc11.com</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>文章到这里，反向代理配置就成功了。<br>如果需要添加新的tomcat服务器，在vhost下继续添加相应的配置即可。<br>还有如服务器权重配置参数 wight …等都在upstream那块设置。<br>nginx不愧是妈妈桑。        </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/nginx/" data-id="ck88pfusu0001gkth3ugzhvxm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/26/git/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          git
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/26/redis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">redis</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

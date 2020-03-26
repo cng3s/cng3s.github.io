@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>归并排序 | chneg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="归并排序算法未优化的基本代码实现12345678910111213141516171819202122232425262728293031323334void merge(T arr[], int lo, int mi, int hi)&amp;#123;    int *tmparr &#x3D; new int[hi-lo+1];    for (k &#x3D; lo; k &lt;&#x3D; h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="归并排序">
+<meta property="og:url" content="https://cng3s.github.io/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/index.html">
+<meta property="og:site_name" content="chneg">
+<meta property="og:description" content="归并排序算法未优化的基本代码实现12345678910111213141516171819202122232425262728293031323334void merge(T arr[], int lo, int mi, int hi)&amp;#123;    int *tmparr &#x3D; new int[hi-lo+1];    for (k &#x3D; lo; k &lt;&#x3D; h">
+<meta property="og:locale" content="zh">
+<meta property="article:published_time" content="2020-03-26T11:49:17.000Z">
+<meta property="article:modified_time" content="2020-03-26T11:49:34.346Z">
+<meta property="article:author" content="chneg">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="chneg" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">chneg</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://cng3s.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-归并排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2020-03-26T11:49:17.000Z" itemprop="datePublished">2020-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      归并排序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="归并排序算法"><a href="#归并排序算法" class="headerlink" title="归并排序算法"></a>归并排序算法</h1><h2 id="未优化的基本代码实现"><a href="#未优化的基本代码实现" class="headerlink" title="未优化的基本代码实现"></a>未优化的基本代码实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">void merge(T arr[], int lo, int mi, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    int *tmparr &#x3D; new int[hi-lo+1];</span><br><span class="line">    for (k &#x3D; lo; k &lt;&#x3D; hi; ++k)</span><br><span class="line">        tmparr[tmpidx] &#x3D; arr[k];</span><br><span class="line">    for (i &#x3D; lo, j &#x3D; mi+1, k &#x3D; lo; i &lt;&#x3D; mid &amp;&amp; j &lt;&#x3D; hi; ++k) &#123;</span><br><span class="line">        if (tmparr[i-l] &lt; tmparr[j-l]) &#123;</span><br><span class="line">            arr[k] &#x3D; tmparr[i-lo];</span><br><span class="line">			++i;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">            arr[k] &#x3D; tmparr[j-lo];</span><br><span class="line">			++k;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    while (i &lt;&#x3D; mi) &#123; arr[k++] &#x3D; tmparr[i-lo]; ++i; &#125;</span><br><span class="line">    while (j &lt;&#x3D; hi) &#123; arr[k++] &#x3D; tmparr[j-lo]; ++j; &#125;</span><br><span class="line">    delete[] tmparr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void merge_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    mi &#x3D; (lo&gt;&gt;1)+(hi&gt;&gt;1);</span><br><span class="line">    merge_sort(arr, lo, mi);</span><br><span class="line">    merge_sort(arr, mi+1, hi);</span><br><span class="line">    merge(arr, lo, mi, hi);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void merge_sort(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    merge_sort(arr, 0, n-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="归并排序代码优化"><a href="#归并排序代码优化" class="headerlink" title="归并排序代码优化"></a>归并排序代码优化</h2><ol>
+<li>几乎有序的情况<br>近乎有序的情况下，归并排序算法效率要差于插入排序算法。原因在于该情况下插排时间复杂度接近O(n)，而归并为O(nlogn)。<br>优化思路是既然归并排序的两个部分arr[lo, mi], arr[mi+1, hi]都是有序的，那么只要符合条件 <strong>arr[mi]&gt;arr[mi+1]</strong> 再进行排序就可以避免不必要的merge操作。于是有了如下改进代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void merge_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (lo &gt;&#x3D; hi)</span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    mi &#x3D; (lo&gt;&gt;1)+(hi&gt;&gt;1);</span><br><span class="line">    merge_sort(arr, lo, mi);</span><br><span class="line">    merge_sort(arr, mi+1, hi);</span><br><span class="line">    if (arr[mi] &gt; arr[mi+1])</span><br><span class="line">        merge(arr, lo, mi, hi);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>arr元素个数很小的情况<br>在元素很小的情况下，任何排序算法都不如插排，所以在元素个数很小的情况下，转为插入排序算法。假设元素个数&lt;=16的情况属于元素个数很小的情况。于是改进代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void insertion_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">    for (i &#x3D; lo+1; i &lt;&#x3D; hi; ++i) &#123;</span><br><span class="line">        T e &#x3D; arr[i];</span><br><span class="line">        for (j &#x3D; i; j &gt; 0 &amp;&amp; arr[j-1] &gt; e; --j)</span><br><span class="line">            arr[j] &#x3D; arr[j-1];</span><br><span class="line">        arr[j] &#x3D; e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void merge_sort(T arr[], int lo, int hi)</span><br><span class="line">&#123;</span><br><span class="line">	if (hi-lo &lt;&#x3D; 15) &#123;</span><br><span class="line">		insertion_sort(arr, lo, hi);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    mi &#x3D; (lo&gt;&gt;1)+(hi&gt;&gt;1);</span><br><span class="line">    merge_sort(arr, lo, mi);</span><br><span class="line">    merge_sort(arr, mi+1, hi);</span><br><span class="line">	if (arr[mi] &gt; arr[mi+1])</span><br><span class="line">    	merge(arr, lo, mi, hi);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+到此为止，比较关于归并排序最常用的优化方法已经介绍完毕。</li>
+</ol>
+<hr>
+<h2 id="归并排序的迭代实现"><a href="#归并排序的迭代实现" class="headerlink" title="归并排序的迭代实现"></a>归并排序的迭代实现</h2><p> <strong>根据统计迭代实现的归并排序效率略低于递归排序</strong><br>下面给出未进行优化的迭代归并排序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void merge_sort_iter(T arr[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    for (int sz &#x3D; 1; sz &lt;&#x3D; n; sz &lt;&lt;&#x3D; 1) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i+sz &lt; n; i +&#x3D; sz+sz)</span><br><span class="line">            &#x2F;&#x2F; 对 arr[i, i+sz-1] 和 arr[i+sz, i+2*sz-1] 进行归并</span><br><span class="line">            &#x2F;&#x2F; min(i+sz+sz-1, n-1)来确定数组边界，防止越界</span><br><span class="line">            merge(arr, i, i+sz-1, min(i+sz+sz-1, n-1));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://cng3s.github.io/2020/03/26/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" data-id="ck88pfut3000agkthe2w50cv1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          平衡二叉树
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/26/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">快速排序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6/" rel="tag">软件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/26/git/">git</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/nginx/">nginx</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/redis/">redis</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99/">设计模式七大原则</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 chneg<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
